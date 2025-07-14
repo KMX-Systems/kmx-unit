@@ -1,0 +1,35 @@
+/// @copyright Copyright (c) 2025 - present KMX Systems. All rights reserved.
+/// @file inc/kmx/unit/angle.hpp
+#pragma once
+#ifndef PCH
+    #include <kmx/unit/base.hpp>
+    #include <numbers>
+#endif
+
+namespace kmx::unit::angle
+{
+    struct tag
+    {
+    };
+
+    template <typename T = double>
+    struct radian: base<radian<T>, tag, T>
+    {
+        using base<radian<T>, tag, T>::base;
+
+        template <typename U>
+        using rebind = radian<U>;
+    };
+
+    template <typename T = double>
+    struct degree: base<degree<T>, tag, T, std::numbers::pi / 180.0>
+    {
+        using base<degree<T>, tag, T, std::numbers::pi / 180.0>::base;
+
+        template <typename U>
+        using rebind = degree<U>;
+    };
+
+    KMX_UNIT_FACTORY_FUNCTIONS(_rad, radian)
+    KMX_UNIT_FACTORY_FUNCTIONS(_deg, degree)
+}

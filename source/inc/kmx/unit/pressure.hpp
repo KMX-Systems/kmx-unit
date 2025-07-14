@@ -1,0 +1,44 @@
+/// @copyright Copyright (c) 2025 - present KMX Systems. All rights reserved.
+/// @file inc/kmx/unit/pressure.hpp
+#pragma once
+#ifndef PCH
+    #include <kmx/unit/base.hpp>
+#endif
+
+namespace kmx::unit::pressure
+{
+    struct tag
+    {
+    };
+
+    template <typename T = double>
+    struct pascal: base<pascal<T>, tag, T>
+    {
+        using base<pascal<T>, tag, T>::base;
+
+        template <typename U>
+        using rebind = pascal<U>;
+    };
+
+    template <typename T = double>
+    struct kilopascal: base<kilopascal<T>, tag, T, 1000.0>
+    {
+        using base<kilopascal<T>, tag, T, 1000.0>::base;
+
+        template <typename U>
+        using rebind = kilopascal<U>;
+    };
+
+    template <typename T = double>
+    struct megapascal: base<megapascal<T>, tag, T, 1.0e6>
+    {
+        using base<megapascal<T>, tag, T, 1.0e6>::base;
+
+        template <typename U>
+        using rebind = megapascal<U>;
+    };
+
+    KMX_UNIT_FACTORY_FUNCTIONS(_Pa, pascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kPa, kilopascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_MPa, megapascal)
+}
