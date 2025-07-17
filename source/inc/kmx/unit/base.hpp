@@ -56,12 +56,26 @@
 
 namespace kmx::unit
 {
-    /**
-     * @brief The generic CRTP base for all units.
-     * @details This class stores the unit's value in its NATIVE representation for performance.
-     *          All arithmetic and comparison operations are performed by converting to a common
-     *          SI representation on the fly.
-     */
+    /// @brief Calculates the relative factor and offset for direct unit-to-unit conversion at compile time.
+    /// @tparam TargetUnit The unit to convert to.
+    /// @tparam SourceUnit The unit to convert from.
+    template <typename TargetUnit, typename SourceUnit>
+    struct relative_conversion
+    {
+        static_assert(std::is_same_v<typename TargetUnit::dimension, typename SourceUnit::dimension>,
+                      "Cannot create a relative conversion between different dimensions.");
+
+        // The compile-time calculated factor to multiply the source value by.
+        static constexpr double factor = SourceUnit::factor_to_si / TargetUnit::factor_to_si;
+
+        // The compile-time calculated offset to add after multiplying.
+        static constexpr double offset = (SourceUnit::offset_to_si - TargetUnit::offset_to_si) / TargetUnit::factor_to_si;
+    };
+
+    /// @brief The generic CRTP base for all units.
+    /// @details This class stores the unit's value in its NATIVE representation for performance.
+    ///          All arithmetic and comparison operations are performed by converting to a common
+    ///          SI representation on the fly.
     template <typename DerivedUnit, typename Dimension, typename ValueType, double FactorToSI = 1.0, double OffsetToSI = 0.0>
     struct base
     {
@@ -87,40 +101,67 @@ namespace kmx::unit
         [[nodiscard]] constexpr DerivedUnit operator+() const noexcept { return DerivedUnit(+value); }
         [[nodiscard]] constexpr DerivedUnit operator-() const noexcept { return DerivedUnit(-value); }
 
-        // Performed by converting both operands to SI, calculating, and converting back to the LHS unit type.
-        // The underlying value_type is promoted to prevent precision loss.
         template <typename OtherUnit>
         [[nodiscard]] constexpr auto operator+(const OtherUnit& other) const noexcept
         {
-            static_assert(std::is_same_v<dimension, typename OtherUnit::dimension>, "Cannot add units of different dimensions.");
-
-            // Promote result to a floating-point type to avoid integer truncation.
+            // Promote result type to avoid precision loss and determine the result unit type
             using result_value_type = std::common_type_t<value_type, typename OtherUnit::value_type, double>;
             using result_unit_type = typename DerivedUnit::template rebind<result_value_type>;
 
-            const auto result_si = this->as_si() + other.as_si();
+            // Get the pre-calculated relative conversion values
+            constexpr auto conv = relative_conversion<result_unit_type, OtherUnit>();
 
-            // This is equivalent to calling convert() but avoids a circular dependency at this point
-            const auto target_native = (result_si - result_unit_type::offset_to_si) / result_unit_type::factor_to_si;
-            return result_unit_type(static_cast<result_value_type>(target_native));
+            // Convert 'other' to the native representation of the result type and add
+            const auto result_native =
+                static_cast<result_value_type>(this->value) + (static_cast<result_value_type>(other.value) * conv.factor + conv.offset);
+
+            return result_unit_type(result_native);
         }
 
         template <typename OtherUnit>
         [[nodiscard]] constexpr auto operator-(const OtherUnit& other) const noexcept
         {
-            static_assert(std::is_same_v<dimension, typename OtherUnit::dimension>, "Cannot subtract units of different dimensions.");
-
-            // Promote result to a floating-point type to avoid integer truncation.
             using result_value_type = std::common_type_t<value_type, typename OtherUnit::value_type, double>;
             using result_unit_type = typename DerivedUnit::template rebind<result_value_type>;
 
-            const auto result_si = this->as_si() - other.as_si();
+            constexpr auto conv = relative_conversion<result_unit_type, OtherUnit>();
 
-            const auto target_native = (result_si - result_unit_type::offset_to_si) / result_unit_type::factor_to_si;
-            return result_unit_type(static_cast<result_value_type>(target_native));
+            const auto result_native =
+                static_cast<result_value_type>(this->value) - (static_cast<result_value_type>(other.value) * conv.factor + conv.offset);
+
+            return result_unit_type(result_native);
         }
 
-        // --- SCALAR ARITHMETIC ---
+        template <typename OtherUnit>
+        [[nodiscard]] constexpr auto operator*(const OtherUnit& other) const noexcept
+        {
+            using result_value_type = std::common_type_t<value_type, typename OtherUnit::value_type, double>;
+            using result_unit_type = typename DerivedUnit::template rebind<result_value_type>;
+
+            // Get the pre-calculated relative conversion values
+            constexpr auto conv = relative_conversion<result_unit_type, OtherUnit>();
+
+            // Convert 'other' to the native representation of the result type and add
+            const auto result_native =
+                static_cast<result_value_type>(this->value) * (static_cast<result_value_type>(other.value) * conv.factor + conv.offset);
+
+            return result_unit_type(result_native);
+        }
+
+        template <typename OtherUnit>
+        [[nodiscard]] constexpr auto operator/(const OtherUnit& other) const noexcept
+        {
+            using result_value_type = std::common_type_t<value_type, typename OtherUnit::value_type, double>;
+            using result_unit_type = typename DerivedUnit::template rebind<result_value_type>;
+
+            constexpr auto conv = relative_conversion<result_unit_type, OtherUnit>();
+
+            const auto result_native =
+                static_cast<result_value_type>(this->value) / (static_cast<result_value_type>(other.value) * conv.factor + conv.offset);
+
+            return result_unit_type(result_native);
+        }
+
         // Performed in the native domain for performance. The underlying value_type is promoted.
         template <typename Scalar>
         [[nodiscard]] constexpr auto operator*(const Scalar scalar) const noexcept
