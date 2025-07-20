@@ -7,23 +7,19 @@
 
 namespace kmx::unit::volume
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct cubic_meter: base<cubic_meter<T>, tag, T>
+    struct cubic_meter: base<cubic_meter<T>, dimension::volume, T>
     {
-        using base<cubic_meter<T>, tag, T>::base;
+        using base<cubic_meter<T>, dimension::volume, T>::base;
 
         template <typename U>
         using rebind = cubic_meter<U>;
     };
 
     template <typename T = double>
-    struct liter: base<liter<T>, tag, T, 1.0 / 1000.0>
+    struct liter: base<liter<T>, dimension::volume, T, 0.001>
     {
-        using base<liter<T>, tag, T, 1.0 / 1000.0>::base;
+        using base<liter<T>, dimension::volume, T, 0.001>::base;
 
         template <typename U>
         using rebind = liter<U>;

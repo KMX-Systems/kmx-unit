@@ -7,14 +7,10 @@
 
 namespace kmx::unit::acceleration
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct meters_per_second_squared: base<meters_per_second_squared<T>, tag, T>
+    struct meters_per_second_squared: base<meters_per_second_squared<T>, dimension::acceleration, T>
     {
-        using base<meters_per_second_squared<T>, tag, T>::base;
+        using base<meters_per_second_squared<T>, dimension::acceleration, T>::base;
 
         template <typename U>
         using rebind = meters_per_second_squared<U>;

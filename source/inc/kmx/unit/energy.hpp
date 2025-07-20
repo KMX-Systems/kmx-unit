@@ -7,41 +7,37 @@
 
 namespace kmx::unit::energy
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct joule: base<joule<T>, tag, T>
+    struct joule: base<joule<T>, dimension::energy, T>
     {
-        using base<joule<T>, tag, T>::base;
+        using base<joule<T>, dimension::energy, T>::base;
 
         template <typename U>
         using rebind = joule<U>;
     };
 
     template <typename T = double>
-    struct kilojoule: base<kilojoule<T>, tag, T, 1000.0>
+    struct kilojoule: base<kilojoule<T>, dimension::energy, T, 1000.0>
     {
-        using base<kilojoule<T>, tag, T, 1000.0>::base;
+        using base<kilojoule<T>, dimension::energy, T, 1000.0>::base;
 
         template <typename U>
         using rebind = kilojoule<U>;
     };
 
     template <typename T = double>
-    struct kilowatt_hour: base<kilowatt_hour<T>, tag, T, 3.6e6>
+    struct kilowatt_hour: base<kilowatt_hour<T>, dimension::energy, T, 3.6e6>
     {
-        using base<kilowatt_hour<T>, tag, T, 3.6e6>::base;
+        using base<kilowatt_hour<T>, dimension::energy, T, 3.6e6>::base;
 
         template <typename U>
         using rebind = kilowatt_hour<U>;
     };
 
     template <typename T = double>
-    struct megawatt_hour: base<megawatt_hour<T>, tag, T, 3.6e9>
+    struct megawatt_hour: base<megawatt_hour<T>, dimension::energy, T, 3.6e9>
     {
-        using base<megawatt_hour<T>, tag, T, 3.6e9>::base;
+        using base<megawatt_hour<T>, dimension::energy, T, 3.6e9>::base;
 
         template <typename U>
         using rebind = megawatt_hour<U>;

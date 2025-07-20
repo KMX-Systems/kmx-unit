@@ -8,23 +8,19 @@
 
 namespace kmx::unit::angular_velocity
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct radian_per_second: base<radian_per_second<T>, tag, T>
+    struct radian_per_second: base<radian_per_second<T>, dimension::angular_velocity, T>
     {
-        using base<radian_per_second<T>, tag, T>::base;
+        using base<radian_per_second<T>, dimension::angular_velocity, T>::base;
 
         template <typename U>
         using rebind = radian_per_second<U>;
     };
 
     template <typename T = double>
-    struct degree_per_second: base<degree_per_second<T>, tag, T, std::numbers::pi / 180.0>
+    struct degree_per_second: base<degree_per_second<T>, dimension::angular_velocity, T, std::numbers::pi / 180.0>
     {
-        using base<degree_per_second<T>, tag, T, std::numbers::pi / 180.0>::base;
+        using base<degree_per_second<T>, dimension::angular_velocity, T, std::numbers::pi / 180.0>::base;
 
         template <typename U>
         using rebind = degree_per_second<U>;

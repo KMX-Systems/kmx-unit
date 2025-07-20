@@ -9,32 +9,28 @@ namespace kmx::unit::electromagnetism
 {
     namespace current
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct ampere: base<ampere<T>, tag, T>
+        struct ampere: base<ampere<T>, dimension::current, T>
         {
-            using base<ampere<T>, tag, T>::base;
+            using base<ampere<T>, dimension::current, T>::base;
 
             template <typename U>
             using rebind = ampere<U>;
         };
 
         template <typename T = double>
-        struct milliampere: base<milliampere<T>, tag, T, 1e-3>
+        struct milliampere: base<milliampere<T>, dimension::current, T, 1e-3>
         {
-            using base<milliampere<T>, tag, T, 1e-3>::base;
+            using base<milliampere<T>, dimension::current, T, 1e-3>::base;
 
             template <typename U>
             using rebind = milliampere<U>;
         };
 
         template <typename T = double>
-        struct kiloampere: base<kiloampere<T>, tag, T, 1e3>
+        struct kiloampere: base<kiloampere<T>, dimension::current, T, 1e3>
         {
-            using base<kiloampere<T>, tag, T, 1e3>::base;
+            using base<kiloampere<T>, dimension::current, T, 1e3>::base;
 
             template <typename U>
             using rebind = kiloampere<U>;
@@ -47,14 +43,10 @@ namespace kmx::unit::electromagnetism
 
     namespace charge
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct coulomb: base<coulomb<T>, tag, T>
+        struct coulomb: base<coulomb<T>, dimension::charge, T>
         {
-            using base<coulomb<T>, tag, T>::base;
+            using base<coulomb<T>, dimension::charge, T>::base;
 
             template <typename U>
             using rebind = coulomb<U>;
@@ -65,32 +57,28 @@ namespace kmx::unit::electromagnetism
 
     namespace voltage
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct volt: base<volt<T>, tag, T>
+        struct volt: base<volt<T>, dimension::voltage, T>
         {
-            using base<volt<T>, tag, T>::base;
+            using base<volt<T>, dimension::voltage, T>::base;
 
             template <typename U>
             using rebind = volt<U>;
         };
 
         template <typename T = double>
-        struct millivolt: base<millivolt<T>, tag, T, 1e-3>
+        struct millivolt: base<millivolt<T>, dimension::voltage, T, 1e-3>
         {
-            using base<millivolt<T>, tag, T, 1e-3>::base;
+            using base<millivolt<T>, dimension::voltage, T, 1e-3>::base;
 
             template <typename U>
             using rebind = millivolt<U>;
         };
 
         template <typename T = double>
-        struct kilovolt: base<kilovolt<T>, tag, T, 1e3>
+        struct kilovolt: base<kilovolt<T>, dimension::voltage, T, 1e3>
         {
-            using base<kilovolt<T>, tag, T, 1e3>::base;
+            using base<kilovolt<T>, dimension::voltage, T, 1e3>::base;
 
             template <typename U>
             using rebind = kilovolt<U>;
@@ -103,23 +91,19 @@ namespace kmx::unit::electromagnetism
 
     namespace resistance
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct ohm: base<ohm<T>, tag, T>
+        struct ohm: base<ohm<T>, dimension::resistance, T>
         {
-            using base<ohm<T>, tag, T>::base;
+            using base<ohm<T>, dimension::resistance, T>::base;
 
             template <typename U>
             using rebind = ohm<U>;
         };
 
         template <typename T = double>
-        struct kiloohm: base<kiloohm<T>, tag, T, 1000.0>
+        struct kiloohm: base<kiloohm<T>, dimension::resistance, T, 1000.0>
         {
-            using base<kiloohm<T>, tag, T, 1000.0>::base;
+            using base<kiloohm<T>, dimension::resistance, T, 1000.0>::base;
 
             template <typename U>
             using rebind = kiloohm<U>;
@@ -131,14 +115,10 @@ namespace kmx::unit::electromagnetism
 
     namespace capacitance
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct farad: base<farad<T>, tag, T>
+        struct farad: base<farad<T>, dimension::capacitance, T>
         {
-            using base<farad<T>, tag, T>::base;
+            using base<farad<T>, dimension::capacitance, T>::base;
 
             template <typename U>
             using rebind = farad<U>;
@@ -149,14 +129,10 @@ namespace kmx::unit::electromagnetism
 
     namespace inductance
     {
-        struct tag
-        {
-        };
-
         template <typename T = double>
-        struct henry: base<henry<T>, tag, T>
+        struct henry: base<henry<T>, dimension::inductance, T>
         {
-            using base<henry<T>, tag, T>::base;
+            using base<henry<T>, dimension::inductance, T>::base;
 
             template <typename U>
             using rebind = henry<U>;

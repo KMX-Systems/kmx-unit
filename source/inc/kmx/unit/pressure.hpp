@@ -7,32 +7,28 @@
 
 namespace kmx::unit::pressure
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct pascal: base<pascal<T>, tag, T>
+    struct pascal: base<pascal<T>, dimension::pressure, T>
     {
-        using base<pascal<T>, tag, T>::base;
+        using base<pascal<T>, dimension::pressure, T>::base;
 
         template <typename U>
         using rebind = pascal<U>;
     };
 
     template <typename T = double>
-    struct kilopascal: base<kilopascal<T>, tag, T, 1000.0>
+    struct kilopascal: base<kilopascal<T>, dimension::pressure, T, 1000.0>
     {
-        using base<kilopascal<T>, tag, T, 1000.0>::base;
+        using base<kilopascal<T>, dimension::pressure, T, 1000.0>::base;
 
         template <typename U>
         using rebind = kilopascal<U>;
     };
 
     template <typename T = double>
-    struct megapascal: base<megapascal<T>, tag, T, 1.0e6>
+    struct megapascal: base<megapascal<T>, dimension::pressure, T, 1.0e6>
     {
-        using base<megapascal<T>, tag, T, 1.0e6>::base;
+        using base<megapascal<T>, dimension::pressure, T, 1.0e6>::base;
 
         template <typename U>
         using rebind = megapascal<U>;

@@ -7,33 +7,26 @@
 
 namespace kmx::unit::mass
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct kilogram: base<kilogram<T>, tag, T>
+    struct kilogram: base<kilogram<T>, dimension::mass, T>
     {
-        using base<kilogram<T>, tag, T>::base;
-
+        using base<kilogram<T>, dimension::mass, T>::base;
         template <typename U>
         using rebind = kilogram<U>;
     };
 
     template <typename T = double>
-    struct gram: base<gram<T>, tag, T, 1.0 / 1000.0>
+    struct gram: base<gram<T>, dimension::mass, T, 1.0 / 1000.0>
     {
-        using base<gram<T>, tag, T, 1.0 / 1000.0>::base;
-
+        using base<gram<T>, dimension::mass, T, 1.0 / 1000.0>::base;
         template <typename U>
         using rebind = gram<U>;
     };
 
     template <typename T = double>
-    struct milligram: base<milligram<T>, tag, T, 1.0 / 1e6>
+    struct milligram: base<milligram<T>, dimension::mass, T, 1.0 / 1e6>
     {
-        using base<milligram<T>, tag, T, 1.0 / 1e6>::base;
-
+        using base<milligram<T>, dimension::mass, T, 1.0 / 1e6>::base;
         template <typename U>
         using rebind = milligram<U>;
     };

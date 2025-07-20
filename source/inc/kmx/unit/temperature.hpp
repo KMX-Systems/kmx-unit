@@ -7,32 +7,28 @@
 
 namespace kmx::unit::temperature
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct kelvin: base<kelvin<T>, tag, T>
+    struct kelvin: base<kelvin<T>, dimension::temperature, T>
     {
-        using base<kelvin<T>, tag, T>::base;
+        using base<kelvin<T>, dimension::temperature, T>::base;
 
         template <typename U>
         using rebind = kelvin<U>;
     };
 
     template <typename T = double>
-    struct celsius: base<celsius<T>, tag, T, 1.0, 273.15>
+    struct celsius: base<celsius<T>, dimension::temperature, T, 1.0, 273.15>
     {
-        using base<celsius<T>, tag, T, 1.0, 273.15>::base;
+        using base<celsius<T>, dimension::temperature, T, 1.0, 273.15>::base;
 
         template <typename U>
         using rebind = celsius<U>;
     };
 
     template <typename T = double>
-    struct fahrenheit: base<fahrenheit<T>, tag, T, 5.0 / 9.0, 273.15 - (32.0 * 5.0 / 9.0)>
+    struct fahrenheit: base<fahrenheit<T>, dimension::temperature, T, 5.0 / 9.0, 273.15 - (32.0 * 5.0 / 9.0)>
     {
-        using base<fahrenheit<T>, tag, T, 5.0 / 9.0, 273.15 - (32.0 * 5.0 / 9.0)>::base;
+        using base<fahrenheit<T>, dimension::temperature, T, 5.0 / 9.0, 273.15 - (32.0 * 5.0 / 9.0)>::base;
 
         template <typename U>
         using rebind = fahrenheit<U>;
@@ -40,5 +36,5 @@ namespace kmx::unit::temperature
 
     KMX_UNIT_FACTORY_FUNCTIONS(_K, kelvin)
     KMX_UNIT_FACTORY_FUNCTIONS(_degC, celsius)
-    KMX_UNIT_FACTORY_FUNCTIONS(_degF, fahrenheit) // Corrected from _F
+    KMX_UNIT_FACTORY_FUNCTIONS(_degF, fahrenheit)
 }

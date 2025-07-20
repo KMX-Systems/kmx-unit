@@ -8,23 +8,19 @@
 
 namespace kmx::unit::angle
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct radian: base<radian<T>, tag, T>
+    struct radian: base<radian<T>, dimension::angle, T>
     {
-        using base<radian<T>, tag, T>::base;
+        using base<radian<T>, dimension::angle, T>::base;
 
         template <typename U>
         using rebind = radian<U>;
     };
 
     template <typename T = double>
-    struct degree: base<degree<T>, tag, T, std::numbers::pi / 180.0>
+    struct degree: base<degree<T>, dimension::angle, T, std::numbers::pi / 180.0>
     {
-        using base<degree<T>, tag, T, std::numbers::pi / 180.0>::base;
+        using base<degree<T>, dimension::angle, T, std::numbers::pi / 180.0>::base;
 
         template <typename U>
         using rebind = degree<U>;

@@ -7,33 +7,26 @@
 
 namespace kmx::unit::velocity
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct meters_per_second: base<meters_per_second<T>, tag, T>
+    struct meters_per_second: base<meters_per_second<T>, dimension::velocity, T>
     {
-        using base<meters_per_second<T>, tag, T>::base;
-
+        using base<meters_per_second<T>, dimension::velocity, T>::base;
         template <typename U>
         using rebind = meters_per_second<U>;
     };
 
     template <typename T = double>
-    struct miles_per_hour: base<miles_per_hour<T>, tag, T, 1609.344 / 3600.0>
+    struct miles_per_hour: base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>
     {
-        using base<miles_per_hour<T>, tag, T, 1609.344 / 3600.0>::base;
-
+        using base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>::base;
         template <typename U>
         using rebind = miles_per_hour<U>;
     };
 
     template <typename T = double>
-    struct knot: base<knot<T>, tag, T, 1852.0 / 3600.0>
+    struct knot: base<knot<T>, dimension::velocity, T, 1852.0 / 3600.0>
     {
-        using base<knot<T>, tag, T, 1852.0 / 3600.0>::base;
-
+        using base<knot<T>, dimension::velocity, T, 1852.0 / 3600.0>::base;
         template <typename U>
         using rebind = knot<U>;
     };

@@ -7,32 +7,28 @@
 
 namespace kmx::unit::area
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct square_meter: base<square_meter<T>, tag, T>
+    struct square_meter: base<square_meter<T>, dimension::area, T>
     {
-        using base<square_meter<T>, tag, T>::base;
+        using base<square_meter<T>, dimension::area, T>::base;
 
         template <typename U>
         using rebind = square_meter<U>;
     };
 
     template <typename T = double>
-    struct hectare: base<hectare<T>, tag, T, 10000.0>
+    struct hectare: base<hectare<T>, dimension::area, T, 10000.0>
     {
-        using base<hectare<T>, tag, T, 10000.0>::base;
+        using base<hectare<T>, dimension::area, T, 10000.0>::base;
 
         template <typename U>
         using rebind = hectare<U>;
     };
 
     template <typename T = double>
-    struct are: base<are<T>, tag, T, 100.0>
+    struct are: base<are<T>, dimension::area, T, 100.0>
     {
-        using base<are<T>, tag, T, 100.0>::base;
+        using base<are<T>, dimension::area, T, 100.0>::base;
 
         template <typename U>
         using rebind = are<U>;

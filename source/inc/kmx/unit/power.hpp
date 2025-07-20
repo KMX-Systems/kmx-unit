@@ -7,23 +7,19 @@
 
 namespace kmx::unit::power
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct watt: base<watt<T>, tag, T>
+    struct watt: base<watt<T>, dimension::power, T>
     {
-        using base<watt<T>, tag, T>::base;
+        using base<watt<T>, dimension::power, T>::base;
 
         template <typename U>
         using rebind = watt<U>;
     };
 
     template <typename T = double>
-    struct kilowatt: base<kilowatt<T>, tag, T, 1000.0>
+    struct kilowatt: base<kilowatt<T>, dimension::power, T, 1000.0>
     {
-        using base<kilowatt<T>, tag, T, 1000.0>::base;
+        using base<kilowatt<T>, dimension::power, T, 1000.0>::base;
 
         template <typename U>
         using rebind = kilowatt<U>;

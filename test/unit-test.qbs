@@ -14,6 +14,7 @@ CppApplication {
         "src/kmx/unit/angle.cpp",
         "src/kmx/unit/angular_velocity.cpp",
         "src/kmx/unit/area.cpp",
+        "src/kmx/unit/derived.cpp",
         "src/kmx/unit/distance.cpp",
         "src/kmx/unit/duration.cpp",
         "src/kmx/unit/electromagnetism.cpp",

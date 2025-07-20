@@ -7,14 +7,10 @@
 
 namespace kmx::unit::luminous_intensity
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct candela: base<candela<T>, tag, T>
+    struct candela: base<candela<T>, dimension::luminous_intensity, T>
     {
-        using base<candela<T>, tag, T>::base;
+        using base<candela<T>, dimension::luminous_intensity, T>::base;
 
         template <typename U>
         using rebind = candela<U>;

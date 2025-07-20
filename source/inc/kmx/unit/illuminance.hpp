@@ -7,14 +7,10 @@
 
 namespace kmx::unit::illuminance
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct lux: base<lux<T>, tag, T>
+    struct lux: base<lux<T>, dimension::illuminance, T>
     {
-        using base<lux<T>, tag, T>::base;
+        using base<lux<T>, dimension::illuminance, T>::base;
 
         template <typename U>
         using rebind = lux<U>;

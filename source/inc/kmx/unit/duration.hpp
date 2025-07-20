@@ -7,68 +7,64 @@
 
 namespace kmx::unit::duration
 {
-    struct tag
-    {
-    };
-
     template <typename T = double>
-    struct second: base<second<T>, tag, T>
+    struct second: base<second<T>, dimension::time, T>
     {
-        using base<second<T>, tag, T>::base;
+        using base<second<T>, dimension::time, T>::base;
 
         template <typename U>
         using rebind = second<U>;
     };
 
     template <typename T = double>
-    struct millisecond: base<millisecond<T>, tag, T, 1.0e-3>
+    struct millisecond: base<millisecond<T>, dimension::time, T, 1.0e-3>
     {
-        using base<millisecond<T>, tag, T, 1.0e-3>::base;
+        using base<millisecond<T>, dimension::time, T, 1.0e-3>::base;
 
         template <typename U>
         using rebind = millisecond<U>;
     };
 
     template <typename T = double>
-    struct microsecond: base<microsecond<T>, tag, T, 1.0e-6>
+    struct microsecond: base<microsecond<T>, dimension::time, T, 1.0e-6>
     {
-        using base<microsecond<T>, tag, T, 1.0e-6>::base;
+        using base<microsecond<T>, dimension::time, T, 1.0e-6>::base;
 
         template <typename U>
         using rebind = microsecond<U>;
     };
 
     template <typename T = double>
-    struct nanosecond: base<nanosecond<T>, tag, T, 1.0e-9>
+    struct nanosecond: base<nanosecond<T>, dimension::time, T, 1.0e-9>
     {
-        using base<nanosecond<T>, tag, T, 1.0e-9>::base;
+        using base<nanosecond<T>, dimension::time, T, 1.0e-9>::base;
 
         template <typename U>
         using rebind = nanosecond<U>;
     };
 
     template <typename T = double>
-    struct minute: base<minute<T>, tag, T, 60.0>
+    struct minute: base<minute<T>, dimension::time, T, 60.0>
     {
-        using base<minute<T>, tag, T, 60.0>::base;
+        using base<minute<T>, dimension::time, T, 60.0>::base;
 
         template <typename U>
         using rebind = minute<U>;
     };
 
     template <typename T = double>
-    struct hour: base<hour<T>, tag, T, 3600.0>
+    struct hour: base<hour<T>, dimension::time, T, 3600.0>
     {
-        using base<hour<T>, tag, T, 3600.0>::base;
+        using base<hour<T>, dimension::time, T, 3600.0>::base;
 
         template <typename U>
         using rebind = hour<U>;
     };
 
     template <typename T = double>
-    struct day: base<day<T>, tag, T, 86400.0>
+    struct day: base<day<T>, dimension::time, T, 86400.0>
     {
-        using base<day<T>, tag, T, 86400.0>::base;
+        using base<day<T>, dimension::time, T, 86400.0>::base;
 
         template <typename U>
         using rebind = day<U>;
