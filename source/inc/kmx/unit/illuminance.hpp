@@ -15,6 +15,9 @@ namespace kmx::unit::illuminance
         template <typename U>
         using rebind = lux<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_lx, lux)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_lx, illuminance::lux)
 }

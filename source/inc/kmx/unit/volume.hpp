@@ -24,7 +24,10 @@ namespace kmx::unit::volume
         template <typename U>
         using rebind = liter<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_m3, cubic_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_L, liter)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_m3, volume::cubic_meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_L, volume::liter)
 }

@@ -24,7 +24,10 @@ namespace kmx::unit::power
         template <typename U>
         using rebind = kilowatt<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_W, watt)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kW, kilowatt)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_W, power::watt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kW, power::kilowatt)
 }

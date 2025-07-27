@@ -33,8 +33,11 @@ namespace kmx::unit::area
         template <typename U>
         using rebind = are<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_m2, square_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ha, hectare)
-    KMX_UNIT_FACTORY_FUNCTIONS(_a, are)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_m2, area::square_meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ha, area::hectare)
+    KMX_UNIT_FACTORY_FUNCTIONS(_a, area::are)
 }

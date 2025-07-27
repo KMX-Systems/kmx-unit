@@ -25,7 +25,10 @@ namespace kmx::unit::angular_velocity
         template <typename U>
         using rebind = degree_per_second<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_rad_s, radian_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_deg_s, degree_per_second)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_rad_s, angular_velocity::radian_per_second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_deg_s, angular_velocity::degree_per_second)
 }

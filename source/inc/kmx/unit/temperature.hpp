@@ -33,8 +33,11 @@ namespace kmx::unit::temperature
         template <typename U>
         using rebind = fahrenheit<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_K, kelvin)
-    KMX_UNIT_FACTORY_FUNCTIONS(_degC, celsius)
-    KMX_UNIT_FACTORY_FUNCTIONS(_degF, fahrenheit)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_K, temperature::kelvin)
+    KMX_UNIT_FACTORY_FUNCTIONS(_degC, temperature::celsius)
+    KMX_UNIT_FACTORY_FUNCTIONS(_degF, temperature::fahrenheit)
 }

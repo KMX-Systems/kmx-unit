@@ -69,12 +69,15 @@ namespace kmx::unit::duration
         template <typename U>
         using rebind = day<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_s, second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ms, millisecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_us, microsecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ns, nanosecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_min, minute)
-    KMX_UNIT_FACTORY_FUNCTIONS(_h, hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_d, day)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_s, duration::second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ms, duration::millisecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_us, duration::microsecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ns, duration::nanosecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_min, duration::minute)
+    KMX_UNIT_FACTORY_FUNCTIONS(_h, duration::hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_d, duration::day)
 }

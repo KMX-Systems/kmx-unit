@@ -16,6 +16,14 @@ namespace kmx::unit::velocity
     };
 
     template <typename T = double>
+    struct kilometers_per_hour: base<kilometers_per_hour<T>, dimension::velocity, T, 1000.0 / 3600.0>
+    {
+        using base<kilometers_per_hour<T>, dimension::velocity, T, 1000.0 / 3600.0>::base;
+        template <typename U>
+        using rebind = kilometers_per_hour<U>;
+    };
+
+    template <typename T = double>
     struct miles_per_hour: base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>
     {
         using base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>::base;
@@ -30,8 +38,12 @@ namespace kmx::unit::velocity
         template <typename U>
         using rebind = knot<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_mps, meters_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mph, miles_per_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kn, knot)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_mps, velocity::meters_per_second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kmh, velocity::kilometers_per_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mph, velocity::miles_per_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kn, velocity::knot)
 }

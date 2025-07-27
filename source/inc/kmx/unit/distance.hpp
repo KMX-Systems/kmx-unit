@@ -60,11 +60,14 @@ namespace kmx::unit::distance
         template <typename U>
         using rebind = nautical_mile<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_m, meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_km, kilometer)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ft, foot)
-    KMX_UNIT_FACTORY_FUNCTIONS(_yd, yard)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mi, mile)
-    KMX_UNIT_FACTORY_FUNCTIONS(_nmi, nautical_mile)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_m, distance::meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_km, distance::kilometer)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ft, distance::foot)
+    KMX_UNIT_FACTORY_FUNCTIONS(_yd, distance::yard)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mi, distance::mile)
+    KMX_UNIT_FACTORY_FUNCTIONS(_nmi, distance::nautical_mile)
 }

@@ -25,7 +25,10 @@ namespace kmx::unit::angle
         template <typename U>
         using rebind = degree<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_rad, radian)
-    KMX_UNIT_FACTORY_FUNCTIONS(_deg, degree)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_rad, angle::radian)
+    KMX_UNIT_FACTORY_FUNCTIONS(_deg, angle::degree)
 }

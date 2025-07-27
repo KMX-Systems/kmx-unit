@@ -35,10 +35,6 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = kiloampere<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_A, ampere)
-        KMX_UNIT_FACTORY_FUNCTIONS(_mA, milliampere)
-        KMX_UNIT_FACTORY_FUNCTIONS(_kA, kiloampere)
     }
 
     namespace charge
@@ -51,8 +47,6 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = coulomb<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_C, coulomb)
     }
 
     namespace voltage
@@ -83,10 +77,6 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = kilovolt<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_V, volt)
-        KMX_UNIT_FACTORY_FUNCTIONS(_mV, millivolt)
-        KMX_UNIT_FACTORY_FUNCTIONS(_kV, kilovolt)
     }
 
     namespace resistance
@@ -108,9 +98,6 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = kiloohm<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_Ohm, ohm)
-        KMX_UNIT_FACTORY_FUNCTIONS(_kOhm, kiloohm)
     }
 
     namespace capacitance
@@ -123,8 +110,6 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = farad<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_F, farad)
     }
 
     namespace inductance
@@ -137,7 +122,20 @@ namespace kmx::unit::electromagnetism
             template <typename U>
             using rebind = henry<U>;
         };
-
-        KMX_UNIT_FACTORY_FUNCTIONS(_H, henry)
     }
+}
+
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_A, electromagnetism::current::ampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mA, electromagnetism::current::milliampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kA, electromagnetism::current::kiloampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_C, electromagnetism::charge::coulomb)
+    KMX_UNIT_FACTORY_FUNCTIONS(_V, electromagnetism::voltage::volt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mV, electromagnetism::voltage::millivolt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kV, electromagnetism::voltage::kilovolt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_Ohm, electromagnetism::resistance::ohm)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kOhm, electromagnetism::resistance::kiloohm)
+    KMX_UNIT_FACTORY_FUNCTIONS(_F, electromagnetism::capacitance::farad)
+    KMX_UNIT_FACTORY_FUNCTIONS(_H, electromagnetism::inductance::henry)
 }

@@ -15,6 +15,9 @@ namespace kmx::unit::luminous_intensity
         template <typename U>
         using rebind = candela<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_cd, candela)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_cd, luminous_intensity::candela)
 }

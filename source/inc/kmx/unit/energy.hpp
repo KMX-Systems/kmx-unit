@@ -42,9 +42,12 @@ namespace kmx::unit::energy
         template <typename U>
         using rebind = megawatt_hour<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_J, joule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kJ, kilojoule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kWh, kilowatt_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MWh, megawatt_hour)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_J, energy::joule)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kJ, energy::kilojoule)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kWh, energy::kilowatt_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_MWh, energy::megawatt_hour)
 }

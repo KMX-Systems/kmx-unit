@@ -33,8 +33,11 @@ namespace kmx::unit::pressure
         template <typename U>
         using rebind = megapascal<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_Pa, pascal)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kPa, kilopascal)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MPa, megapascal)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_Pa, pressure::pascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kPa, pressure::kilopascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_MPa, pressure::megapascal)
 }

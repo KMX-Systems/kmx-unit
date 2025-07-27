@@ -334,7 +334,7 @@ namespace kmx::unit
         return unit * scalar;
     }
 
-    // CONVERSION
+    // Conversion
     template <typename TargetUnit, typename SourceUnit>
     [[nodiscard]] constexpr TargetUnit convert(const SourceUnit& source) noexcept
     {

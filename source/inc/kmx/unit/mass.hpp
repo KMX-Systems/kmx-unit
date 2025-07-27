@@ -30,8 +30,11 @@ namespace kmx::unit::mass
         template <typename U>
         using rebind = milligram<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_kg, kilogram)
-    KMX_UNIT_FACTORY_FUNCTIONS(_g, gram)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mg, milligram)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_kg, mass::kilogram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_g, mass::gram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mg, mass::milligram)
 }

@@ -30,8 +30,11 @@ namespace kmx::unit::force
         template <typename U>
         using rebind = kilogram_force<U>;
     };
+}
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_N, newton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kN, kilonewton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kgf, kilogram_force)
+namespace kmx::unit
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_N, force::newton)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kN, force::kilonewton)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kgf, force::kilogram_force)
 }
