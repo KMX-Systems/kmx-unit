@@ -12,7 +12,7 @@ namespace kmx::unit::data_rate
     {
     };
 
-    // --- Base Rate (bits per second) ---
+    // Base Rate (bits per second)
     template <typename T = double>
     struct bits_per_second: base<bits_per_second<T>, dimension, T>
     {
@@ -87,7 +87,7 @@ namespace kmx::unit
     KMX_UNIT_FACTORY_FUNCTIONS(_MiBps, data_rate::mebibytes_per_second)
     KMX_UNIT_FACTORY_FUNCTIONS(_GiBps, data_rate::gibibytes_per_second)
 
-    // --- SPECIALIZED CROSS-DIMENSION OPERATOR (Information / Time) ---
+    // SPECIALIZED CROSS-DIMENSION OPERATOR (Information / Time)
     template <typename InfoUnit, typename TimeUnit>
     [[nodiscard]] constexpr auto operator/(const InfoUnit& lhs, const TimeUnit& rhs) noexcept
         requires(std::is_same_v<typename InfoUnit::dimension, information::dimension> &&

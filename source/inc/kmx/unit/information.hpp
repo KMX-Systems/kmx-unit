@@ -12,7 +12,7 @@ namespace kmx::unit::information
     {
     };
 
-    // --- Integer-based scale factors for perfect precision ---
+    // Integer-based scale factors for perfect precision
     constexpr std::uint64_t bits_in_byte = 8ull;
     // Decimal (SI)
     constexpr std::uint64_t kilo = 1000ull;
@@ -27,7 +27,7 @@ namespace kmx::unit::information
     constexpr std::uint64_t tebi = gibi * 1024ull;
     constexpr std::uint64_t pebi = tebi * 1024ull;
 
-    // --- Base Units ---
+    // Base Units
     template <typename T = double>
     struct bit: base<bit<T>, dimension, T>
     {
@@ -44,7 +44,7 @@ namespace kmx::unit::information
         using rebind = byte<U>;
     };
 
-    // --- Decimal (SI) Prefixes ---
+    // Decimal (SI) Prefixes
     template <typename T = double>
     struct kilobit: base<kilobit<T>, dimension, T, static_cast<double>(kilo)>
     {
@@ -124,7 +124,7 @@ namespace kmx::unit::information
         using rebind = petabyte<U>;
     };
 
-    // --- Binary (IEC) Prefixes ---
+    // Binary (IEC) Prefixes
     template <typename T = double>
     struct kibibit: base<kibibit<T>, dimension, T, static_cast<double>(kibi)>
     {
