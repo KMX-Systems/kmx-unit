@@ -14,6 +14,10 @@ namespace kmx::unit::duration
 
         template <typename U>
         using rebind = second<U>;
+
+        static constexpr std::uint32_t per_day = 86400u;
+        static constexpr std::uint32_t per_hour = 3600u;
+        static constexpr std::uint32_t per_minute = 60u;
     };
 
     template <typename T = double>
@@ -50,6 +54,8 @@ namespace kmx::unit::duration
 
         template <typename U>
         using rebind = minute<U>;
+
+        static constexpr std::uint32_t per_hour = 60u;
     };
 
     template <typename T = double>
@@ -59,6 +65,8 @@ namespace kmx::unit::duration
 
         template <typename U>
         using rebind = hour<U>;
+
+        static constexpr std::uint32_t per_day = 24u;
     };
 
     template <typename T = double>
@@ -68,6 +76,8 @@ namespace kmx::unit::duration
 
         template <typename U>
         using rebind = day<U>;
+
+        static constexpr std::uint32_t per_week = 7u;
     };
 }
 
