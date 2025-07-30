@@ -32,9 +32,9 @@ namespace kmx::unit::force
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_N, force::newton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kN, force::kilonewton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kgf, force::kilogram_force)
+    KMX_UNIT_FACTORY_FUNCTIONS(_N, unit::force::newton)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kN, unit::force::kilonewton)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kgf, unit::force::kilogram_force)
 }

@@ -35,9 +35,9 @@ namespace kmx::unit::pressure
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_Pa, pressure::pascal)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kPa, pressure::kilopascal)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MPa, pressure::megapascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_Pa, unit::pressure::pascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kPa, unit::pressure::kilopascal)
+    KMX_UNIT_FACTORY_FUNCTIONS(_MPa, unit::pressure::megapascal)
 }

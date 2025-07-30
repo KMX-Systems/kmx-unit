@@ -16,5 +16,9 @@ namespace kmx::unit::acceleration
         using rebind = meters_per_second_squared<U>;
     };
 
-    KMX_UNIT_FACTORY_FUNCTIONS(_mps2, meters_per_second_squared)
+}
+
+namespace kmx
+{
+    KMX_UNIT_FACTORY_FUNCTIONS(_mps2, unit::acceleration::meters_per_second_squared)
 }

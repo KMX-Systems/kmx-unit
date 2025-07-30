@@ -27,8 +27,8 @@ namespace kmx::unit::angular_velocity
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_rad_s, angular_velocity::radian_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_deg_s, angular_velocity::degree_per_second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_rad_s, unit::angular_velocity::radian_per_second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_deg_s, unit::angular_velocity::degree_per_second)
 }

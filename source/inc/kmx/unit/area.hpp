@@ -35,9 +35,9 @@ namespace kmx::unit::area
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m2, area::square_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ha, area::hectare)
-    KMX_UNIT_FACTORY_FUNCTIONS(_a, area::are)
+    KMX_UNIT_FACTORY_FUNCTIONS(_m2, unit::area::square_meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ha, unit::area::hectare)
+    KMX_UNIT_FACTORY_FUNCTIONS(_a, unit::area::are)
 }

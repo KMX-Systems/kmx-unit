@@ -27,8 +27,8 @@ namespace kmx::unit::angle
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_rad, angle::radian)
-    KMX_UNIT_FACTORY_FUNCTIONS(_deg, angle::degree)
+    KMX_UNIT_FACTORY_FUNCTIONS(_rad, unit::angle::radian)
+    KMX_UNIT_FACTORY_FUNCTIONS(_deg, unit::angle::degree)
 }

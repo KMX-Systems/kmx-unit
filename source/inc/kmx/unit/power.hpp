@@ -26,8 +26,8 @@ namespace kmx::unit::power
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_W, power::watt)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kW, power::kilowatt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_W, unit::power::watt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kW, unit::power::kilowatt)
 }

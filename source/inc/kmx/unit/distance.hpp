@@ -62,12 +62,12 @@ namespace kmx::unit::distance
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m, distance::meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_km, distance::kilometer)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ft, distance::foot)
-    KMX_UNIT_FACTORY_FUNCTIONS(_yd, distance::yard)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mi, distance::mile)
-    KMX_UNIT_FACTORY_FUNCTIONS(_nmi, distance::nautical_mile)
+    KMX_UNIT_FACTORY_FUNCTIONS(_m, unit::distance::meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_km, unit::distance::kilometer)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ft, unit::distance::foot)
+    KMX_UNIT_FACTORY_FUNCTIONS(_yd, unit::distance::yard)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mi, unit::distance::mile)
+    KMX_UNIT_FACTORY_FUNCTIONS(_nmi, unit::distance::nautical_mile)
 }

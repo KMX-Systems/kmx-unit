@@ -17,7 +17,7 @@ namespace kmx::unit::illuminance
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_lx, illuminance::lux)
+    KMX_UNIT_FACTORY_FUNCTIONS(_lx, unit::illuminance::lux)
 }

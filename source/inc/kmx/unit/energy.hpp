@@ -44,10 +44,10 @@ namespace kmx::unit::energy
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_J, energy::joule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kJ, energy::kilojoule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kWh, energy::kilowatt_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MWh, energy::megawatt_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_J, unit::energy::joule)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kJ, unit::energy::kilojoule)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kWh, unit::energy::kilowatt_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_MWh, unit::energy::megawatt_hour)
 }

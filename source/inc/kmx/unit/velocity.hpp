@@ -40,10 +40,10 @@ namespace kmx::unit::velocity
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_mps, velocity::meters_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kmh, velocity::kilometers_per_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mph, velocity::miles_per_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kn, velocity::knot)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mps, unit::velocity::meters_per_second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kmh, unit::velocity::kilometers_per_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mph, unit::velocity::miles_per_hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kn, unit::velocity::knot)
 }

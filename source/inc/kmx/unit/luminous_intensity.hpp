@@ -17,7 +17,7 @@ namespace kmx::unit::luminous_intensity
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_cd, luminous_intensity::candela)
+    KMX_UNIT_FACTORY_FUNCTIONS(_cd, unit::luminous_intensity::candela)
 }

@@ -125,17 +125,17 @@ namespace kmx::unit::electromagnetism
     }
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_A, electromagnetism::current::ampere)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mA, electromagnetism::current::milliampere)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kA, electromagnetism::current::kiloampere)
-    KMX_UNIT_FACTORY_FUNCTIONS(_C, electromagnetism::charge::coulomb)
-    KMX_UNIT_FACTORY_FUNCTIONS(_V, electromagnetism::voltage::volt)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mV, electromagnetism::voltage::millivolt)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kV, electromagnetism::voltage::kilovolt)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Ohm, electromagnetism::resistance::ohm)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kOhm, electromagnetism::resistance::kiloohm)
-    KMX_UNIT_FACTORY_FUNCTIONS(_F, electromagnetism::capacitance::farad)
-    KMX_UNIT_FACTORY_FUNCTIONS(_H, electromagnetism::inductance::henry)
+    KMX_UNIT_FACTORY_FUNCTIONS(_A, unit::electromagnetism::current::ampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mA, unit::electromagnetism::current::milliampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kA, unit::electromagnetism::current::kiloampere)
+    KMX_UNIT_FACTORY_FUNCTIONS(_C, unit::electromagnetism::charge::coulomb)
+    KMX_UNIT_FACTORY_FUNCTIONS(_V, unit::electromagnetism::voltage::volt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mV, unit::electromagnetism::voltage::millivolt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kV, unit::electromagnetism::voltage::kilovolt)
+    KMX_UNIT_FACTORY_FUNCTIONS(_Ohm, unit::electromagnetism::resistance::ohm)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kOhm, unit::electromagnetism::resistance::kiloohm)
+    KMX_UNIT_FACTORY_FUNCTIONS(_F, unit::electromagnetism::capacitance::farad)
+    KMX_UNIT_FACTORY_FUNCTIONS(_H, unit::electromagnetism::inductance::henry)
 }

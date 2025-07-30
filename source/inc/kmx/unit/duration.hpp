@@ -81,13 +81,13 @@ namespace kmx::unit::duration
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_s, duration::second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ms, duration::millisecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_us, duration::microsecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ns, duration::nanosecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_min, duration::minute)
-    KMX_UNIT_FACTORY_FUNCTIONS(_h, duration::hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_d, duration::day)
+    KMX_UNIT_FACTORY_FUNCTIONS(_s, unit::duration::second)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ms, unit::duration::millisecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_us, unit::duration::microsecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ns, unit::duration::nanosecond)
+    KMX_UNIT_FACTORY_FUNCTIONS(_min, unit::duration::minute)
+    KMX_UNIT_FACTORY_FUNCTIONS(_h, unit::duration::hour)
+    KMX_UNIT_FACTORY_FUNCTIONS(_d, unit::duration::day)
 }

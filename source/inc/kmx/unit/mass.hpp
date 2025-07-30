@@ -30,11 +30,20 @@ namespace kmx::unit::mass
         template <typename U>
         using rebind = milligram<U>;
     };
+
+    template <typename T = double>
+    struct microgram: base<microgram<T>, dimension::mass, T, 1.0 / 1e9>
+    {
+        using base<microgram<T>, dimension::mass, T, 1.0 / 1e9>::base;
+        template <typename U>
+        using rebind = microgram<U>;
+    };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_kg, mass::kilogram)
-    KMX_UNIT_FACTORY_FUNCTIONS(_g, mass::gram)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mg, mass::milligram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_kg, unit::mass::kilogram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_g, unit::mass::gram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_mg, unit::mass::milligram)
+    KMX_UNIT_FACTORY_FUNCTIONS(_ug, unit::mass::microgram)
 }

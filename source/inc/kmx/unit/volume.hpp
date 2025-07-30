@@ -26,8 +26,8 @@ namespace kmx::unit::volume
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m3, volume::cubic_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_L, volume::liter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_m3, unit::volume::cubic_meter)
+    KMX_UNIT_FACTORY_FUNCTIONS(_L, unit::volume::liter)
 }

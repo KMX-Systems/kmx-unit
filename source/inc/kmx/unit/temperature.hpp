@@ -35,9 +35,9 @@ namespace kmx::unit::temperature
     };
 }
 
-namespace kmx::unit
+namespace kmx
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_K, temperature::kelvin)
-    KMX_UNIT_FACTORY_FUNCTIONS(_degC, temperature::celsius)
-    KMX_UNIT_FACTORY_FUNCTIONS(_degF, temperature::fahrenheit)
+    KMX_UNIT_FACTORY_FUNCTIONS(_K, unit::temperature::kelvin)
+    KMX_UNIT_FACTORY_FUNCTIONS(_degC, unit::temperature::celsius)
+    KMX_UNIT_FACTORY_FUNCTIONS(_degF, unit::temperature::fahrenheit)
 }
