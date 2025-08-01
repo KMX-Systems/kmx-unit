@@ -9,13 +9,13 @@ namespace kmx::unit::power
     {
         SECTION("Float Conversions (convert)")
         {
-            auto val = _kW(3.5);
+            const auto val = _kW(3.5);
             REQUIRE_THAT(convert<watt<>>(val).as_native(), approx(3500.0));
         }
 
         SECTION("Integer Conversions (fp_convert)")
         {
-            auto val = kilowatt<int>(4);
+            const auto val = kilowatt<int>(4);
             REQUIRE(fp_convert<watt<int>>(val).as_native() == 4000);
         }
     }

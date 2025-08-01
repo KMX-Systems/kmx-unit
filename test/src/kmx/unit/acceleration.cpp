@@ -7,7 +7,7 @@ namespace kmx::unit::acceleration
 {
     TEST_CASE("Acceleration Unit Tests", "[acceleration]")
     {
-        auto a1 = _mps2(9.8);
+        const auto a1 = _mps2(9.8);
         REQUIRE_THAT(a1.as_native(), approx(9.8));
         REQUIRE_THAT(a1.as_si(), approx(9.8));
     }

@@ -7,7 +7,7 @@ namespace kmx::unit::illuminance
 {
     TEST_CASE("Illuminance Unit Tests", "[illuminance]")
     {
-        auto val = _lx(500.0);
+        const auto val = _lx(500.0);
         REQUIRE(val.value == 500.0);
     }
 }

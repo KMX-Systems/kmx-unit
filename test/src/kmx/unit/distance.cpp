@@ -12,6 +12,7 @@ namespace kmx::unit::distance
             REQUIRE(_m(1609.344) == _mi(1.0));
             REQUIRE(_km(1.609344) == _mi(1.0));
         }
+
         SECTION("Float Conversions (convert)")
         {
             REQUIRE_THAT(convert<kilometer<>>(_m(1609.344)).as_native(), approx(1.609344));
@@ -21,6 +22,7 @@ namespace kmx::unit::distance
             REQUIRE_THAT(convert<foot<>>(_mi(1.0)).as_native(), approx(5280.0));
             REQUIRE_THAT(convert<meter<>>(_nmi(1.0)).as_native(), approx(1852.0));
         }
+
         SECTION("Integer Conversions (fp_convert)")
         {
             REQUIRE(fp_convert<meter<int>>(_mi(2)).as_native() == 3219);

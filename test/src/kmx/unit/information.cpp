@@ -35,18 +35,18 @@ namespace kmx::unit::information
         SECTION("Arithmetic and Floating Point Correctness")
         {
             // 1 kilobyte (8000 bits) + 24 bits = 8024 bits.
-            auto result1 = _kB(1) + _b(24);
-            auto result1_in_bits = convert<bit<>>(result1);
+            const auto result1 = _kB(1) + _b(24);
+            const auto result1_in_bits = convert<bit<>>(result1);
             REQUIRE_THAT(result1_in_bits.as_native(), approx(8024.0));
 
             // 1 kibibyte (8192 bits) + 24 bits = 8216 bits.
-            auto result2 = _KiB(1) + _b(24);
-            auto result2_in_bits = convert<bit<>>(result2);
+            const auto result2 = _KiB(1) + _b(24);
+            const auto result2_in_bits = convert<bit<>>(result2);
             REQUIRE_THAT(result2_in_bits.as_native(), approx(8216.0));
 
             // 1 kibibyte + 1 kilobyte = 1024 bytes + 1000 bytes = 2024 bytes
-            auto result3 = _KiB(1) + _kB(1);
-            auto result3_in_bytes = convert<byte<>>(result3);
+            const auto result3 = _KiB(1) + _kB(1);
+            const auto result3_in_bytes = convert<byte<>>(result3);
             REQUIRE_THAT(result3_in_bytes.as_native(), approx(2024.0));
         }
     }
@@ -61,8 +61,8 @@ namespace kmx::unit::information
             REQUIRE(_TiB(1.0) == _GiB(1024.0));
 
             // Compare a "1 terabyte" hard drive to its actual tebibyte capacity
-            auto hdd_advertised = _TB(1.0);
-            auto hdd_actual_in_TiB = convert<tebibyte<>>(hdd_advertised);
+            const auto hdd_advertised = _TB(1.0);
+            const auto hdd_actual_in_TiB = convert<tebibyte<>>(hdd_advertised);
             // 1,000,000,000,000 / (1024^4) = 0.909...
             REQUIRE_THAT(hdd_actual_in_TiB.as_native(), approx(0.909495));
         }

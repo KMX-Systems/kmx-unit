@@ -14,8 +14,10 @@ namespace kmx::unit::area
             REQUIRE_THAT(convert<square_meter<>>(_ha(1.5)).as_native(), approx(15000.0));
             REQUIRE_THAT(convert<are<>>(_ha(1.5)).as_native(), approx(150.0));
             REQUIRE_THAT(convert<square_meter<>>(_a(150.0)).as_native(), approx(15000.0));
+            REQUIRE_THAT(convert<square_meter<>>(_ha(5.7)).as_native(), approx(57000.0));
             REQUIRE_THAT(convert<hectare<>>(_a(150.0)).as_native(), approx(1.5));
         }
+
         SECTION("Integer Conversions (fp_convert)")
         {
             REQUIRE(fp_convert<square_meter<int>>(_ha(2)).as_native() == 20000);
