@@ -13,11 +13,9 @@ namespace kmx::unit::streaming
         SECTION("Named Units Stream Correctly")
         {
             std::stringstream ss;
-            const std::string empty; // Helper for clearing the stringstream
 
             // --- Physical Units ---
             ss << _mps2(9.8);
-            auto a = ss.str();
             REQUIRE(ss.str() == "9.8 mps2");
             ss.str(empty);
             ss << _rad(1.57);
@@ -152,28 +150,27 @@ namespace kmx::unit::streaming
         SECTION("Generic SI Units Stream with Detailed Dimensions")
         {
             std::stringstream ss;
-            const std::string empty;
 
             // Force (M·L·T⁻²)
-            auto force = _kg(10.0) * _mps2(9.8);
+            const auto force = _kg(10.0) * _mps2(9.8);
             ss << force;
             REQUIRE(ss.str() == "98 kg·m·s^-2");
             ss.str(empty);
 
             // Pressure (M·L⁻¹·T⁻²)
-            auto pressure = _N(100.0) / _m2(10.0);
+            const auto pressure = _N(100.0) / _m2(10.0);
             ss << pressure;
             REQUIRE(ss.str() == "10 kg·m^-1·s^-2");
             ss.str(empty);
 
             // Dimensionless ratio (should have no units)
-            auto ratio = _mi(1.0) / _ft(5280.0);
+            const auto ratio = _mi(1.0) / _ft(5280.0);
             ss << ratio;
             REQUIRE(ss.str() == "1");
             ss.str(empty);
 
             // Velocity (L·T⁻¹)
-            auto velocity = _m(100) / _s(10);
+            const auto velocity = _m(100) / _s(10);
             ss << velocity;
             REQUIRE(ss.str() == "10 m·s^-1");
             ss.str(empty);
