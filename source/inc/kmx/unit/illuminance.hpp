@@ -14,6 +14,8 @@ namespace kmx::unit::illuminance
 
         template <typename U>
         using rebind = lux<U>;
+
+        static constexpr std::string_view text = "lx";
     };
 }
 

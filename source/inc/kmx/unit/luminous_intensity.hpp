@@ -14,6 +14,8 @@ namespace kmx::unit::luminous_intensity
 
         template <typename U>
         using rebind = candela<U>;
+
+        static constexpr std::string_view text = "cd";
     };
 }
 

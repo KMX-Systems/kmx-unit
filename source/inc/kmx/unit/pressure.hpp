@@ -14,6 +14,8 @@ namespace kmx::unit::pressure
 
         template <typename U>
         using rebind = pascal<U>;
+
+        static constexpr std::string_view text = "Pa";
     };
 
     template <typename T = double>
@@ -23,6 +25,8 @@ namespace kmx::unit::pressure
 
         template <typename U>
         using rebind = kilopascal<U>;
+
+        static constexpr std::string_view text = "kPa";
     };
 
     template <typename T = double>
@@ -32,6 +36,8 @@ namespace kmx::unit::pressure
 
         template <typename U>
         using rebind = megapascal<U>;
+
+        static constexpr std::string_view text = "MPa";
     };
 }
 

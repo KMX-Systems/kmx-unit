@@ -14,6 +14,8 @@ namespace kmx::unit::area
 
         template <typename U>
         using rebind = square_meter<U>;
+
+        static constexpr std::string_view text = "m2";
     };
 
     template <typename T = double>
@@ -23,6 +25,8 @@ namespace kmx::unit::area
 
         template <typename U>
         using rebind = hectare<U>;
+
+        static constexpr std::string_view text = "ha";
     };
 
     template <typename T = double>
@@ -32,6 +36,8 @@ namespace kmx::unit::area
 
         template <typename U>
         using rebind = are<U>;
+
+        static constexpr std::string_view text = "a";
     };
 }
 

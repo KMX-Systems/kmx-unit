@@ -28,6 +28,7 @@ CppApplication {
         "src/kmx/unit/power.cpp",
         "src/kmx/unit/pressure.cpp",
         "src/kmx/unit/temperature.cpp",
+        "src/kmx/unit/text.cpp",
         "src/kmx/unit/velocity.cpp",
         "src/kmx/unit/volume.cpp",
     ]

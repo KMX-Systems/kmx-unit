@@ -16,6 +16,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = ampere<U>;
+
+            static constexpr std::string_view text = "A";
         };
 
         template <typename T = double>
@@ -25,6 +27,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = milliampere<U>;
+
+            static constexpr std::string_view text = "mA";
         };
 
         template <typename T = double>
@@ -34,6 +38,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = kiloampere<U>;
+
+            static constexpr std::string_view text = "kA";
         };
     }
 
@@ -46,6 +52,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = coulomb<U>;
+
+            static constexpr std::string_view text = "C";
         };
     }
 
@@ -58,6 +66,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = volt<U>;
+
+            static constexpr std::string_view text = "V";
         };
 
         template <typename T = double>
@@ -67,6 +77,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = millivolt<U>;
+
+            static constexpr std::string_view text = "mV";
         };
 
         template <typename T = double>
@@ -76,6 +88,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = kilovolt<U>;
+
+            static constexpr std::string_view text = "kV";
         };
     }
 
@@ -88,6 +102,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = ohm<U>;
+
+            static constexpr std::string_view text = "Ohm";
         };
 
         template <typename T = double>
@@ -97,6 +113,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = kiloohm<U>;
+
+            static constexpr std::string_view text = "kOhm";
         };
     }
 
@@ -109,6 +127,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = farad<U>;
+
+            static constexpr std::string_view text = "F";
         };
     }
 
@@ -121,6 +141,8 @@ namespace kmx::unit::electromagnetism
 
             template <typename U>
             using rebind = henry<U>;
+
+            static constexpr std::string_view text = "H";
         };
     }
 }

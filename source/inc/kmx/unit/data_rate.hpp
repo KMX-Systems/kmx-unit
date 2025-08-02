@@ -12,7 +12,7 @@ namespace kmx::unit::data_rate
     {
     };
 
-    // Base Rate (bits per second)
+    // Base rate (bits per second)
     template <typename T = double>
     struct bits_per_second: base<bits_per_second<T>, dimension, T>
     {
@@ -20,6 +20,8 @@ namespace kmx::unit::data_rate
 
         template <typename U>
         using rebind = bits_per_second<U>;
+
+        static constexpr std::string_view text = "bps";
     };
 
     // Decimal
@@ -27,8 +29,11 @@ namespace kmx::unit::data_rate
     struct megabits_per_second: base<megabits_per_second<T>, dimension, T, static_cast<double>(information::mega)>
     {
         using base<megabits_per_second<T>, dimension, T, static_cast<double>(information::mega)>::base;
+
         template <typename U>
         using rebind = megabits_per_second<U>;
+
+        static constexpr std::string_view text = "Mbps";
     };
 
     template <typename T = double>
@@ -36,16 +41,22 @@ namespace kmx::unit::data_rate
         base<megabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mega)>
     {
         using base<megabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mega)>::base;
+
         template <typename U>
         using rebind = megabytes_per_second<U>;
+
+        static constexpr std::string_view text = "MBps";
     };
 
     template <typename T = double>
     struct gigabits_per_second: base<gigabits_per_second<T>, dimension, T, static_cast<double>(information::giga)>
     {
         using base<gigabits_per_second<T>, dimension, T, static_cast<double>(information::giga)>::base;
+
         template <typename U>
         using rebind = gigabits_per_second<U>;
+
+        static constexpr std::string_view text = "Gbps";
     };
 
     template <typename T = double>
@@ -53,8 +64,11 @@ namespace kmx::unit::data_rate
         base<gigabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::giga)>
     {
         using base<gigabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::giga)>::base;
+
         template <typename U>
         using rebind = gigabytes_per_second<U>;
+
+        static constexpr std::string_view text = "GBps";
     };
 
     // Binary
@@ -63,8 +77,11 @@ namespace kmx::unit::data_rate
         base<mebibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mebi)>
     {
         using base<mebibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mebi)>::base;
+
         template <typename U>
         using rebind = mebibytes_per_second<U>;
+
+        static constexpr std::string_view text = "MiBps";
     };
 
     template <typename T = double>
@@ -74,6 +91,8 @@ namespace kmx::unit::data_rate
         using base<gibibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::gibi)>::base;
         template <typename U>
         using rebind = gibibytes_per_second<U>;
+
+        static constexpr std::string_view text = "GiBps";
     };
 }
 
@@ -87,7 +106,7 @@ namespace kmx::unit
     KMX_UNIT_FACTORY_FUNCTIONS(_MiBps, data_rate::mebibytes_per_second)
     KMX_UNIT_FACTORY_FUNCTIONS(_GiBps, data_rate::gibibytes_per_second)
 
-    // SPECIALIZED CROSS-DIMENSION OPERATOR (Information / Time)
+    // Specialized cross-dimension operator (information / time)
     template <typename InfoUnit, typename TimeUnit>
     [[nodiscard]] constexpr auto operator/(const InfoUnit& lhs, const TimeUnit& rhs) noexcept
         requires(std::is_same_v<typename InfoUnit::dimension, information::dimension> &&

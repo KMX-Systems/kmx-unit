@@ -14,6 +14,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = meter<U>;
+
+        static constexpr std::string_view text = "m";
     };
 
     template <typename T = double>
@@ -23,6 +25,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = kilometer<U>;
+
+        static constexpr std::string_view text = "km";
     };
 
     template <typename T = double>
@@ -32,6 +36,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = foot<U>;
+
+        static constexpr std::string_view text = "ft";
     };
 
     template <typename T = double>
@@ -41,6 +47,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = yard<U>;
+
+        static constexpr std::string_view text = "yd";
     };
 
     template <typename T = double>
@@ -50,6 +58,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = mile<U>;
+
+        static constexpr std::string_view text = "mi";
     };
 
     template <typename T = double>
@@ -59,6 +69,8 @@ namespace kmx::unit::distance
 
         template <typename U>
         using rebind = nautical_mile<U>;
+
+        static constexpr std::string_view text = "nmi";
     };
 }
 

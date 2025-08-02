@@ -11,32 +11,44 @@ namespace kmx::unit::velocity
     struct meters_per_second: base<meters_per_second<T>, dimension::velocity, T>
     {
         using base<meters_per_second<T>, dimension::velocity, T>::base;
+
         template <typename U>
         using rebind = meters_per_second<U>;
+
+        static constexpr std::string_view text = "m/s";
     };
 
     template <typename T = double>
     struct kilometers_per_hour: base<kilometers_per_hour<T>, dimension::velocity, T, 1000.0 / 3600.0>
     {
         using base<kilometers_per_hour<T>, dimension::velocity, T, 1000.0 / 3600.0>::base;
+
         template <typename U>
         using rebind = kilometers_per_hour<U>;
+
+        static constexpr std::string_view text = "km/h";
     };
 
     template <typename T = double>
     struct miles_per_hour: base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>
     {
         using base<miles_per_hour<T>, dimension::velocity, T, 1609.344 / 3600.0>::base;
+
         template <typename U>
         using rebind = miles_per_hour<U>;
+
+        static constexpr std::string_view text = "mph";
     };
 
     template <typename T = double>
     struct knot: base<knot<T>, dimension::velocity, T, 1852.0 / 3600.0>
     {
         using base<knot<T>, dimension::velocity, T, 1852.0 / 3600.0>::base;
+
         template <typename U>
         using rebind = knot<U>;
+
+        static constexpr std::string_view text = "kn";
     };
 }
 

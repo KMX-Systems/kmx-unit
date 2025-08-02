@@ -14,8 +14,9 @@ namespace kmx::unit::acceleration
 
         template <typename U>
         using rebind = meters_per_second_squared<U>;
-    };
 
+        static constexpr std::string_view text = "mps2";
+    };
 }
 
 namespace kmx

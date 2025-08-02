@@ -32,16 +32,22 @@ namespace kmx::unit::information
     struct bit: base<bit<T>, dimension, T>
     {
         using base<bit<T>, dimension, T>::base;
+
         template <typename U>
         using rebind = bit<U>;
+
+        static constexpr std::string_view text = "b";
     };
 
     template <typename T = double>
     struct byte: base<byte<T>, dimension, T, static_cast<double>(bits_in_byte)>
     {
         using base<byte<T>, dimension, T, static_cast<double>(bits_in_byte)>::base;
+
         template <typename U>
         using rebind = byte<U>;
+
+        static constexpr std::string_view text = "B";
     };
 
     // Decimal (SI) Prefixes
@@ -49,79 +55,110 @@ namespace kmx::unit::information
     struct kilobit: base<kilobit<T>, dimension, T, static_cast<double>(kilo)>
     {
         using base<kilobit<T>, dimension, T, static_cast<double>(kilo)>::base;
+
         template <typename U>
         using rebind = kilobit<U>;
+
+        static constexpr std::string_view text = "kb";
     };
 
     template <typename T = double>
     struct kilobyte: base<kilobyte<T>, dimension, T, static_cast<double>(bits_in_byte* kilo)>
     {
         using base<kilobyte<T>, dimension, T, static_cast<double>(bits_in_byte* kilo)>::base;
+
         template <typename U>
         using rebind = kilobyte<U>;
+
+        static constexpr std::string_view text = "kB";
     };
 
     template <typename T = double>
     struct megabit: base<megabit<T>, dimension, T, static_cast<double>(mega)>
     {
         using base<megabit<T>, dimension, T, static_cast<double>(mega)>::base;
+
         template <typename U>
         using rebind = megabit<U>;
+
+        static constexpr std::string_view text = "Mb";
     };
 
     template <typename T = double>
     struct megabyte: base<megabyte<T>, dimension, T, static_cast<double>(bits_in_byte* mega)>
     {
         using base<megabyte<T>, dimension, T, static_cast<double>(bits_in_byte* mega)>::base;
+
         template <typename U>
         using rebind = megabyte<U>;
+
+        static constexpr std::string_view text = "MB";
     };
+
     template <typename T = double>
     struct gigabit: base<gigabit<T>, dimension, T, static_cast<double>(giga)>
     {
         using base<gigabit<T>, dimension, T, static_cast<double>(giga)>::base;
+
         template <typename U>
         using rebind = gigabit<U>;
+
+        static constexpr std::string_view text = "Gb";
     };
 
     template <typename T = double>
     struct gigabyte: base<gigabyte<T>, dimension, T, static_cast<double>(bits_in_byte* giga)>
     {
         using base<gigabyte<T>, dimension, T, static_cast<double>(bits_in_byte* giga)>::base;
+
         template <typename U>
         using rebind = gigabyte<U>;
+
+        static constexpr std::string_view text = "GB";
     };
 
     template <typename T = double>
     struct terabit: base<terabit<T>, dimension, T, static_cast<double>(tera)>
     {
         using base<terabit<T>, dimension, T, static_cast<double>(tera)>::base;
+
         template <typename U>
         using rebind = terabit<U>;
+
+        static constexpr std::string_view text = "Tb";
     };
 
     template <typename T = double>
     struct terabyte: base<terabyte<T>, dimension, T, static_cast<double>(bits_in_byte* tera)>
     {
         using base<terabyte<T>, dimension, T, static_cast<double>(bits_in_byte* tera)>::base;
+
         template <typename U>
         using rebind = terabyte<U>;
+
+        static constexpr std::string_view text = "TB";
     };
 
     template <typename T = double>
     struct petabit: base<petabit<T>, dimension, T, static_cast<double>(peta)>
     {
         using base<petabit<T>, dimension, T, static_cast<double>(peta)>::base;
+
         template <typename U>
         using rebind = petabit<U>;
+
+        static constexpr std::string_view text = "Pb";
     };
 
     template <typename T = double>
     struct petabyte: base<petabyte<T>, dimension, T, static_cast<double>(bits_in_byte* peta)>
     {
         using base<petabyte<T>, dimension, T, static_cast<double>(bits_in_byte* peta)>::base;
+
         template <typename U>
         using rebind = petabyte<U>;
+
+        static constexpr std::string_view text = "PB";
     };
 
     // Binary (IEC) Prefixes
@@ -129,80 +166,110 @@ namespace kmx::unit::information
     struct kibibit: base<kibibit<T>, dimension, T, static_cast<double>(kibi)>
     {
         using base<kibibit<T>, dimension, T, static_cast<double>(kibi)>::base;
+
         template <typename U>
         using rebind = kibibit<U>;
+
+        static constexpr std::string_view text = "Kib";
     };
 
     template <typename T = double>
     struct kibibyte: base<kibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* kibi)>
     {
         using base<kibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* kibi)>::base;
+
         template <typename U>
         using rebind = kibibyte<U>;
+
+        static constexpr std::string_view text = "KiB";
     };
 
     template <typename T = double>
     struct mebibit: base<mebibit<T>, dimension, T, static_cast<double>(mebi)>
     {
         using base<mebibit<T>, dimension, T, static_cast<double>(mebi)>::base;
+
         template <typename U>
         using rebind = mebibit<U>;
+
+        static constexpr std::string_view text = "Mib";
     };
 
     template <typename T = double>
     struct mebibyte: base<mebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* mebi)>
     {
         using base<mebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* mebi)>::base;
+
         template <typename U>
         using rebind = mebibyte<U>;
+
+        static constexpr std::string_view text = "MiB";
     };
 
     template <typename T = double>
     struct gibibit: base<gibibit<T>, dimension, T, static_cast<double>(gibi)>
     {
         using base<gibibit<T>, dimension, T, static_cast<double>(gibi)>::base;
+
         template <typename U>
         using rebind = gibibit<U>;
+
+        static constexpr std::string_view text = "Gib";
     };
 
     template <typename T = double>
     struct gibibyte: base<gibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* gibi)>
     {
         using base<gibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* gibi)>::base;
+
         template <typename U>
         using rebind = gibibyte<U>;
+
+        static constexpr std::string_view text = "GiB";
     };
 
     template <typename T = double>
     struct tebibit: base<tebibit<T>, dimension, T, static_cast<double>(tebi)>
     {
         using base<tebibit<T>, dimension, T, static_cast<double>(tebi)>::base;
+
         template <typename U>
         using rebind = tebibit<U>;
+
+        static constexpr std::string_view text = "Tib";
     };
 
     template <typename T = double>
     struct tebibyte: base<tebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* tebi)>
     {
         using base<tebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* tebi)>::base;
+
         template <typename U>
         using rebind = tebibyte<U>;
+
+        static constexpr std::string_view text = "TiB";
     };
 
     template <typename T = double>
     struct pebibit: base<pebibit<T>, dimension, T, static_cast<double>(pebi)>
     {
         using base<pebibit<T>, dimension, T, static_cast<double>(pebi)>::base;
+
         template <typename U>
         using rebind = pebibit<U>;
+
+        static constexpr std::string_view text = "Pib";
     };
 
     template <typename T = double>
     struct pebibyte: base<pebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* pebi)>
     {
         using base<pebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* pebi)>::base;
+
         template <typename U>
         using rebind = pebibyte<U>;
+
+        static constexpr std::string_view text = "PiB";
     };
 }
 

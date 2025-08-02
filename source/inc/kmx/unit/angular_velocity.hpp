@@ -15,6 +15,8 @@ namespace kmx::unit::angular_velocity
 
         template <typename U>
         using rebind = radian_per_second<U>;
+
+        static constexpr std::string_view text = "rad/s";
     };
 
     template <typename T = double>
@@ -24,6 +26,8 @@ namespace kmx::unit::angular_velocity
 
         template <typename U>
         using rebind = degree_per_second<U>;
+
+        static constexpr std::string_view text = "deg/s";
     };
 }
 

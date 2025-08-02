@@ -14,6 +14,8 @@ namespace kmx::unit::volume
 
         template <typename U>
         using rebind = cubic_meter<U>;
+
+        static constexpr std::string_view text = "m3";
     };
 
     template <typename T = double>
@@ -23,6 +25,8 @@ namespace kmx::unit::volume
 
         template <typename U>
         using rebind = liter<U>;
+
+        static constexpr std::string_view text = "L";
     };
 }
 

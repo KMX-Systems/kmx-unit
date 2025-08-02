@@ -14,6 +14,8 @@ namespace kmx::unit::temperature
 
         template <typename U>
         using rebind = kelvin<U>;
+
+        static constexpr std::string_view text = "K";
     };
 
     template <typename T = double>
@@ -23,6 +25,8 @@ namespace kmx::unit::temperature
 
         template <typename U>
         using rebind = celsius<U>;
+
+        static constexpr std::string_view text = "deg C";
     };
 
     template <typename T = double>
@@ -32,6 +36,8 @@ namespace kmx::unit::temperature
 
         template <typename U>
         using rebind = fahrenheit<U>;
+
+        static constexpr std::string_view text = "deg F";
     };
 }
 

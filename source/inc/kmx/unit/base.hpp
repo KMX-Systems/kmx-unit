@@ -5,6 +5,7 @@
     #include <cmath>
     #include <cstdint>
     #include <ratio>
+    #include <string_view>
     #include <type_traits>
 #endif
 

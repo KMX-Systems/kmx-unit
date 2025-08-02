@@ -7,6 +7,7 @@ StaticLibrary {
     }
     files: [
         "inc/kmx/unit/acceleration.hpp",
+        "inc/kmx/unit/all.hpp",
         "inc/kmx/unit/angle.hpp",
         "inc/kmx/unit/angular_velocity.hpp",
         "inc/kmx/unit/area.hpp",
@@ -24,6 +25,7 @@ StaticLibrary {
         "inc/kmx/unit/power.hpp",
         "inc/kmx/unit/pressure.hpp",
         "inc/kmx/unit/temperature.hpp",
+        "inc/kmx/unit/text.hpp",
         "inc/kmx/unit/velocity.hpp",
         "inc/kmx/unit/volume.hpp",
     ]
