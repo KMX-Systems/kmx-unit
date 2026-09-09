@@ -1,14 +1,29 @@
 # Copyright (c) 2025 - present KMX Systems. All rights reserved.
 cmake_minimum_required(VERSION 3.23)
 
-# A build writes nothing into the source directory itself. Configuring in place would scatter the cache, the
-# generated makefiles and the objects among the headers, and no ignore rule can tell those apart afterwards.
-# The check precedes project(), which is the call that would write the cache this refuses to produce; being
-# ahead of it also means PROJECT_IS_TOP_LEVEL is not set yet, so top level is read off the directories.
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR AND CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
-    message(FATAL_ERROR
-        "kmx-unit does not configure in its source directory. Build into the output directory instead:\n"
-        "  cmake --preset release      (or: cmake -S . -B output/cmake/release)")
+# A build writes nothing into the source tree except under `output/`. Configuring in place would scatter the
+# cache, the generated makefiles and the objects among the headers, and a `build/` beside them splits the
+# generated files over two directories, so that a clean slate is no longer one deletion. A binary directory
+# outside the tree writes nothing here and is left alone. The check precedes project(), which is the call
+# that would write the cache this refuses to produce; being ahead of it also means PROJECT_IS_TOP_LEVEL is
+# not set yet, so top level is read off the directories.
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    cmake_path(SET kmx_unit_guard_source NORMALIZE "${CMAKE_SOURCE_DIR}")
+    cmake_path(SET kmx_unit_guard_output NORMALIZE "${CMAKE_SOURCE_DIR}/output")
+    # IS_PREFIX holds for a path equal to the prefix as well, so the in-source case is covered by the first
+    # test and rejected by the second.
+    cmake_path(IS_PREFIX kmx_unit_guard_source "${CMAKE_BINARY_DIR}" NORMALIZE kmx_unit_guard_in_tree)
+    cmake_path(IS_PREFIX kmx_unit_guard_output "${CMAKE_BINARY_DIR}" NORMALIZE kmx_unit_guard_in_output)
+    if(kmx_unit_guard_in_tree AND NOT kmx_unit_guard_in_output)
+        message(FATAL_ERROR
+            "kmx-unit writes every build artifact under ${kmx_unit_guard_output}, but the binary directory "
+            "is ${CMAKE_BINARY_DIR}.\n"
+            "  cmake --preset release      (or: cmake -S . -B output/cmake/release)")
+    endif()
+    unset(kmx_unit_guard_source)
+    unset(kmx_unit_guard_output)
+    unset(kmx_unit_guard_in_tree)
+    unset(kmx_unit_guard_in_output)
 endif()
 
 # The version lives in the header, so that a consumer reading it and the installed package config always

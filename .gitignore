@@ -28,12 +28,13 @@
 *.app
 
 # Build and tooling output
-# Everything a build, a test run or a tooling script produces goes under `output/`. The remaining entries
-# catch the directories a build system falls back to when it is invoked without being told where to write:
-# qbs names its build directory after the configuration, CMake writes wherever `-B` points.
+# Everything a build, a test run or a tooling script produces goes under `output/`. Both build systems now
+# refuse a build directory that lands inside the tree anywhere else, but each writes something before its
+# guard runs - qbs creates the directory it was pointed at, CMake writes its cache before it reads
+# CMakeLists.txt - so the names they fall back to stay ignored: qbs names its build directory after the
+# configuration, CMake writes wherever `-B` points.
 /output/
 CMakeUserPresets.json
-# CMake writes these two before it reads CMakeLists.txt, so the in-source guard there cannot prevent them.
 /CMakeCache.txt
 /CMakeFiles/
 /build/

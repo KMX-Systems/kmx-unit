@@ -365,13 +365,17 @@ output/
   coverage/                lcov data and the HTML report
   compile_time/            compile-time probe report, CSV and Clang traces
   benchmark/               formatter benchmark guard results
+  staging/, consumer/      the install prefix and scratch project of the CI packaging check
 ```
 
 Neither build system picks that location on its own, so both are told where to write: QBS through
-`--build-directory` (its default is the current directory, which is what leaves a stray `release/` behind),
-CMake through the presets below, which configure into `output/cmake/<preset>`. Configuring CMake in the
-source directory is refused outright. The `KMX_UNIT_OUTPUT_DIR` CMake cache variable and the environment
-variable of the same name, which the scripts under `tools/` read, move the root elsewhere.
+`--build-directory` (its default is the current directory, which is what would leave a stray `release/`
+behind), CMake through the presets below, which configure into `output/cmake/<preset>`. Being told is not
+enough on its own, so both projects also refuse a build directory that lands anywhere inside the source tree
+but under `output/` - an in-source CMake configuration, a `build/` beside the sources, the QBS default -
+and name the option to pass instead. A build directory outside the tree writes nothing here and is
+accepted. The `KMX_UNIT_OUTPUT_DIR` CMake cache variable and the environment variable of the same name,
+which the scripts under `tools/` read, move the root elsewhere.
 
 ### Primary workflow: QBS
 

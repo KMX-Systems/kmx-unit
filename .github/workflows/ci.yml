@@ -225,10 +225,10 @@ jobs:
               return 0;
           }
           SOURCE
-          cmake -S output/consumer -B output/consumer/build \
+          cmake -S output/consumer -B output/consumer/cmake \
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/output/staging"
-          cmake --build output/consumer/build
-          CXX=g++-14 bash tools/cmake/run_with_compiler_runtime.sh ./output/consumer/build/consumer
+          cmake --build output/consumer/cmake
+          CXX=g++-14 bash tools/cmake/run_with_compiler_runtime.sh ./output/consumer/cmake/consumer
 
   format:
     name: clang-format
