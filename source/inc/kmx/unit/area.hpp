@@ -5,45 +5,26 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of area. The base SI unit of the family is the square meter.
 namespace kmx::unit::area
 {
-    template <typename T = double>
-    struct square_meter: base<square_meter<T>, dimension::area, T>
-    {
-        using base<square_meter<T>, dimension::area, T>::base;
+    /// @brief The base SI unit of area.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(square_meter, dimension::area_t, scale::one, "m2")
 
-        template <typename U>
-        using rebind = square_meter<U>;
+    /// @brief Ten thousand square meters, the unit land area is quoted in.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(hectare, dimension::area_t, scale::ratio<10000>, "ha")
 
-        static constexpr std::string_view text = "m2";
-    };
-
-    template <typename T = double>
-    struct hectare: base<hectare<T>, dimension::area, T, 10000.0>
-    {
-        using base<hectare<T>, dimension::area, T, 10000.0>::base;
-
-        template <typename U>
-        using rebind = hectare<U>;
-
-        static constexpr std::string_view text = "ha";
-    };
-
-    template <typename T = double>
-    struct are: base<are<T>, dimension::area, T, 100.0>
-    {
-        using base<are<T>, dimension::area, T, 100.0>::base;
-
-        template <typename U>
-        using rebind = are<U>;
-
-        static constexpr std::string_view text = "a";
-    };
+    /// @brief One hundred square meters, that is one hundredth of a hectare.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(are, dimension::area_t, scale::hecto, "a")
 }
 
-namespace kmx
+/// @brief The literal suffixes building area values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m2, unit::area::square_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ha, unit::area::hectare)
-    KMX_UNIT_FACTORY_FUNCTIONS(_a, unit::area::are)
+    KMX_UNIT_LITERALS(m2, unit::area::square_meter)
+    KMX_UNIT_LITERALS(ha, unit::area::hectare)
+    KMX_UNIT_LITERALS(a, unit::area::are)
 }

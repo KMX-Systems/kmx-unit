@@ -2,72 +2,57 @@
 /// @file inc/kmx/unit/energy.hpp
 #pragma once
 #ifndef PCH
+    #include <kmx/unit/acceleration.hpp>
     #include <kmx/unit/base.hpp>
+    #include <kmx/unit/distance.hpp>
+    #include <kmx/unit/mass.hpp>
 #endif
 
+/// @brief Units of energy and work. The base SI unit of the family is the joule.
 namespace kmx::unit::energy
 {
-    template <typename T = double>
-    struct joule: base<joule<T>, dimension::energy, T>
-    {
-        using base<joule<T>, dimension::energy, T>::base;
+    /// @brief The work of one pound-force over one foot, in joule.
+    /// @details Derived from exact definitions: one pound-force is 0.45359237 kg under standard gravity and
+    /// one foot is 0.3048 m, which gives 1.3558179483314004 J.
+    using joule_per_foot_pound =
+        scale::multiply_t<scale::multiply_t<mass::kilogram_per_pound, acceleration::standard_gravity_magnitude>, distance::meter_per_foot>;
 
-        template <typename U>
-        using rebind = joule<U>;
+    /// @brief The energy of one foot-pound in joules.
+    inline constexpr double joule_per_foot_pound_si = scale::value_of<double, joule_per_foot_pound>();
 
-        static constexpr std::string_view text = "J";
-    };
+    /// @brief The base SI unit of energy.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(joule, dimension::energy_t, scale::one, "J")
 
-    template <typename T = double>
-    struct kilojoule: base<kilojoule<T>, dimension::energy, T, 1000.0>
-    {
-        using base<kilojoule<T>, dimension::energy, T, 1000.0>::base;
+    /// @brief One thousand joule.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilojoule, dimension::energy_t, scale::kilo, "kJ")
 
-        template <typename U>
-        using rebind = kilojoule<U>;
+    /// @brief The work of one pound-force over one foot, the customary unit of projectile energy.
+    /// @note The "pound" of this unit is a force, not the mass unit kmx::unit::mass::pound.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(foot_pound, dimension::energy_t, joule_per_foot_pound, "ft-lbf")
 
-        static constexpr std::string_view text = "kJ";
-    };
+    /// @brief The energy of one kilowatt sustained for one hour.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilowatt_hour, dimension::energy_t, scale::ratio<3600000>, "kWh")
 
-    template <typename T = double>
-    struct kilowatt_hour: base<kilowatt_hour<T>, dimension::energy, T, 3.6e6>
-    {
-        using base<kilowatt_hour<T>, dimension::energy, T, 3.6e6>::base;
+    /// @brief The energy of one megawatt sustained for one hour.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(megawatt_hour, dimension::energy_t, scale::ratio<3600000000>, "MWh")
 
-        template <typename U>
-        using rebind = kilowatt_hour<U>;
-
-        static constexpr std::string_view text = "kWh";
-    };
-
-    template <typename T = double>
-    struct megawatt_hour: base<megawatt_hour<T>, dimension::energy, T, 3.6e9>
-    {
-        using base<megawatt_hour<T>, dimension::energy, T, 3.6e9>::base;
-
-        template <typename U>
-        using rebind = megawatt_hour<U>;
-
-        static constexpr std::string_view text = "MWh";
-    };
-
-    template <typename T = double>
-    struct gigawatt_hour: base<megawatt_hour<T>, dimension::energy, T, 3.6e12>
-    {
-        using base<megawatt_hour<T>, dimension::energy, T, 3.6e12>::base;
-
-        template <typename U>
-        using rebind = megawatt_hour<U>;
-
-        static constexpr std::string_view text = "GWh";
-    };
+    /// @brief The energy of one gigawatt sustained for one hour.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gigawatt_hour, dimension::energy_t, scale::ratio<3600000000000>, "GWh")
 }
 
-namespace kmx
+/// @brief The literal suffixes building energy values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_J, unit::energy::joule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kJ, unit::energy::kilojoule)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kWh, unit::energy::kilowatt_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MWh, unit::energy::megawatt_hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_GWh, unit::energy::gigawatt_hour)
+    KMX_UNIT_LITERALS(J, unit::energy::joule)
+    KMX_UNIT_LITERALS(kJ, unit::energy::kilojoule)
+    KMX_UNIT_LITERALS(ftlbf, unit::energy::foot_pound)
+    KMX_UNIT_LITERALS(kWh, unit::energy::kilowatt_hour)
+    KMX_UNIT_LITERALS(MWh, unit::energy::megawatt_hour)
+    KMX_UNIT_LITERALS(GWh, unit::energy::gigawatt_hour)
 }

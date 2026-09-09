@@ -2,122 +2,126 @@
 /// @file inc/kmx/unit/data_rate.hpp
 #pragma once
 #ifndef PCH
+    #include <kmx/unit/duration.hpp>
     #include <kmx/unit/information.hpp>
 #endif
 
+/// @brief Units of data rate. The base unit of the family is the bit per second.
+/// @details A rate is information divided by time, and the dimension of the family says exactly that,
+/// so a rate arises from an ordinary division and yields information back when multiplied by a time.
 namespace kmx::unit::data_rate
 {
-    /// @brief A unique dimension tag for units of data rate (information/time).
-    struct dimension
-    {
-    };
+    /// @brief The dimension of the family: information divided by time, whose base unit is the bit per second.
+    /// @details It is an alias of kmx::unit::dimension::data_rate_t rather than a tag of its own, so a rate is
+    /// an ordinary quotient of the two dimensions it is built from and needs no special case to behave.
+    using dimension_t = ::kmx::unit::dimension::data_rate_t;
 
-    // Base rate (bits per second)
-    template <typename T = double>
-    struct bits_per_second: base<bits_per_second<T>, dimension, T>
-    {
-        using base<bits_per_second<T>, dimension, T>::base;
+    /// @brief The base unit of the family, one bit transferred per second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(bits_per_second, dimension_t, scale::one, "bps")
 
-        template <typename U>
-        using rebind = bits_per_second<U>;
+    /// @brief One million bits per second, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(megabits_per_second, dimension_t, scale::mega, "Mbps")
 
-        static constexpr std::string_view text = "bps";
-    };
+    /// @brief One million bytes per second, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(megabytes_per_second, dimension_t, information::bytes_of<scale::mega>, "MBps")
 
-    // Decimal
-    template <typename T = double>
-    struct megabits_per_second: base<megabits_per_second<T>, dimension, T, static_cast<double>(information::mega)>
-    {
-        using base<megabits_per_second<T>, dimension, T, static_cast<double>(information::mega)>::base;
+    /// @brief One thousand million bits per second, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gigabits_per_second, dimension_t, scale::giga, "Gbps")
 
-        template <typename U>
-        using rebind = megabits_per_second<U>;
+    /// @brief One thousand million bytes per second, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gigabytes_per_second, dimension_t, information::bytes_of<scale::giga>, "GBps")
 
-        static constexpr std::string_view text = "Mbps";
-    };
+    /// @brief One mebibyte, that is 1048576 bytes, per second; the binary prefix of the IEC.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(mebibytes_per_second, dimension_t, information::bytes_of<scale::mebi>, "MiBps")
 
-    template <typename T = double>
-    struct megabytes_per_second:
-        base<megabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mega)>
-    {
-        using base<megabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mega)>::base;
-
-        template <typename U>
-        using rebind = megabytes_per_second<U>;
-
-        static constexpr std::string_view text = "MBps";
-    };
-
-    template <typename T = double>
-    struct gigabits_per_second: base<gigabits_per_second<T>, dimension, T, static_cast<double>(information::giga)>
-    {
-        using base<gigabits_per_second<T>, dimension, T, static_cast<double>(information::giga)>::base;
-
-        template <typename U>
-        using rebind = gigabits_per_second<U>;
-
-        static constexpr std::string_view text = "Gbps";
-    };
-
-    template <typename T = double>
-    struct gigabytes_per_second:
-        base<gigabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::giga)>
-    {
-        using base<gigabytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::giga)>::base;
-
-        template <typename U>
-        using rebind = gigabytes_per_second<U>;
-
-        static constexpr std::string_view text = "GBps";
-    };
-
-    // Binary
-    template <typename T = double>
-    struct mebibytes_per_second:
-        base<mebibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mebi)>
-    {
-        using base<mebibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::mebi)>::base;
-
-        template <typename U>
-        using rebind = mebibytes_per_second<U>;
-
-        static constexpr std::string_view text = "MiBps";
-    };
-
-    template <typename T = double>
-    struct gibibytes_per_second:
-        base<gibibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::gibi)>
-    {
-        using base<gibibytes_per_second<T>, dimension, T, static_cast<double>(information::bits_in_byte* information::gibi)>::base;
-        template <typename U>
-        using rebind = gibibytes_per_second<U>;
-
-        static constexpr std::string_view text = "GiBps";
-    };
+    /// @brief One gibibyte, that is 1073741824 bytes, per second; the binary prefix of the IEC.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gibibytes_per_second, dimension_t, information::bytes_of<scale::gibi>, "GiBps")
 }
 
 namespace kmx::unit
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_bps, data_rate::bits_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Mbps, data_rate::megabits_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MBps, data_rate::megabytes_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Gbps, data_rate::gigabits_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_GBps, data_rate::gigabytes_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MiBps, data_rate::mebibytes_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_GiBps, data_rate::gibibytes_per_second)
+    /// @brief Satisfied by the units measuring an amount of information.
+    /// @tparam U Candidate type.
+    template <typename U>
+    concept information_unit = unit_type<U> && std::is_same_v<typename U::dimension_t, dimension::information_t>;
 
-    // Specialized cross-dimension operator (information / time)
+    /// @brief Satisfied by the units measuring an amount of information per unit of time.
+    /// @tparam U Candidate type.
+    template <typename U>
+    concept data_rate_unit = unit_type<U> && std::is_same_v<typename U::dimension_t, dimension::data_rate_t>;
+
+    // The three operators below are the generic cross-dimension arithmetic of kmx/unit/base.hpp, narrowed
+    // to report a named unit of this family rather than an anonymous kmx::unit::si_unit. They compute the
+    // same value; only the type of the result differs, so that it streams and formats as "bps", "b" or "s".
+    // Their constraints include kmx::unit::product_units, which is what makes them subsume the generic
+    // operators and win overload resolution rather than tie with them.
+
+    /// @brief Divides an amount of information by a time.
+    /// @param lhs The amount of information.
+    /// @param rhs The time.
+    /// @return The rate, in bits per second.
     template <typename InfoUnit, typename TimeUnit>
     [[nodiscard]] constexpr auto operator/(const InfoUnit& lhs, const TimeUnit& rhs) noexcept
-        requires(std::is_same_v<typename InfoUnit::dimension, information::dimension> &&
-                 std::is_same_v<typename TimeUnit::dimension, dimension::time>)
+        requires(product_units<InfoUnit, TimeUnit> && information_unit<InfoUnit> && time_unit<TimeUnit>)
     {
-        using result_value_type = std::common_type_t<typename InfoUnit::value_type, typename TimeUnit::value_type, double>;
-
-        // Data rate is always in terms of [information] per second.
-        // The value is (info_in_bits) / (time_in_seconds)
-        const auto val_bps = lhs.template as_si<result_value_type>() / rhs.template as_si<result_value_type>();
-
-        return data_rate::bits_per_second<result_value_type>(val_bps);
+        using result_value_t = std::common_type_t<typename InfoUnit::value_t, typename TimeUnit::value_t, double>;
+        const auto value_bps = lhs.template as_si<result_value_t>() / rhs.template as_si<result_value_t>();
+        return data_rate::bits_per_second<result_value_t>(value_bps);
     }
+
+    /// @brief Divides an amount of information by a rate, that is the time such a transfer takes.
+    /// @param lhs The amount of information.
+    /// @param rhs The rate.
+    /// @return The time, in seconds.
+    template <typename InfoUnit, typename RateUnit>
+    [[nodiscard]] constexpr auto operator/(const InfoUnit& lhs, const RateUnit& rhs) noexcept
+        requires(product_units<InfoUnit, RateUnit> && information_unit<InfoUnit> && data_rate_unit<RateUnit>)
+    {
+        using result_value_t = std::common_type_t<typename InfoUnit::value_t, typename RateUnit::value_t, double>;
+        const auto value_seconds = lhs.template as_si<result_value_t>() / rhs.template as_si<result_value_t>();
+        return duration::second<result_value_t>(value_seconds);
+    }
+
+    /// @brief Multiplies a rate by a time, that is the amount such a transfer carries.
+    /// @param lhs The rate.
+    /// @param rhs The time.
+    /// @return The amount of information, in bits.
+    template <typename RateUnit, typename TimeUnit>
+    [[nodiscard]] constexpr auto operator*(const RateUnit& lhs, const TimeUnit& rhs) noexcept
+        requires(product_units<RateUnit, TimeUnit> && data_rate_unit<RateUnit> && time_unit<TimeUnit>)
+    {
+        using result_value_t = std::common_type_t<typename RateUnit::value_t, typename TimeUnit::value_t, double>;
+        const auto value_bits = lhs.template as_si<result_value_t>() * rhs.template as_si<result_value_t>();
+        return information::bit<result_value_t>(value_bits);
+    }
+
+    /// @brief Multiplies a time by a rate; see the commutative overload.
+    /// @param lhs The time.
+    /// @param rhs The rate.
+    /// @return The amount of information, in bits.
+    template <typename TimeUnit, typename RateUnit>
+    [[nodiscard]] constexpr auto operator*(const TimeUnit& lhs, const RateUnit& rhs) noexcept
+        requires(product_units<TimeUnit, RateUnit> && time_unit<TimeUnit> && data_rate_unit<RateUnit>)
+    {
+        return rhs * lhs;
+    }
+}
+
+/// @brief The literal suffixes building data rate values, the terse form of this family.
+namespace kmx::literals
+{
+    KMX_UNIT_LITERALS(bps, unit::data_rate::bits_per_second)
+    KMX_UNIT_LITERALS(Mbps, unit::data_rate::megabits_per_second)
+    KMX_UNIT_LITERALS(MBps, unit::data_rate::megabytes_per_second)
+    KMX_UNIT_LITERALS(Gbps, unit::data_rate::gigabits_per_second)
+    KMX_UNIT_LITERALS(GBps, unit::data_rate::gigabytes_per_second)
+    KMX_UNIT_LITERALS(MiBps, unit::data_rate::mebibytes_per_second)
+    KMX_UNIT_LITERALS(GiBps, unit::data_rate::gibibytes_per_second)
 }

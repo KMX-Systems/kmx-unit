@@ -1,0 +1,79 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": { "major": 3, "minor": 23, "patch": 0 },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/output/cmake/${presetName}",
+            "installDir": "${sourceDir}/output/install",
+            "cacheVariables": {
+                "KMX_UNIT_OUTPUT_DIR": "${sourceDir}/output"
+            }
+        },
+        {
+            "name": "release",
+            "inherits": "base",
+            "displayName": "Release",
+            "description": "Optimized build of the tests and the example, warnings as errors.",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KMX_UNIT_STRICT_WARNINGS": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "inherits": "base",
+            "displayName": "Debug",
+            "description": "Unoptimized build with debug information, warnings as errors.",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KMX_UNIT_STRICT_WARNINGS": "ON"
+            }
+        },
+        {
+            "name": "sanitizers",
+            "inherits": "base",
+            "displayName": "Sanitizers",
+            "description": "Debug build instrumented with the address and undefined behaviour sanitizers.",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KMX_UNIT_STRICT_WARNINGS": "ON",
+                "KMX_UNIT_SANITIZERS": "ON"
+            }
+        },
+        {
+            "name": "coverage",
+            "inherits": "base",
+            "displayName": "Coverage",
+            "description": "Debug build instrumented for gcov; the `coverage` target writes output/coverage.",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KMX_UNIT_COVERAGE": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "release", "configurePreset": "release" },
+        { "name": "debug", "configurePreset": "debug" },
+        { "name": "sanitizers", "configurePreset": "sanitizers" },
+        { "name": "coverage", "configurePreset": "coverage", "targets": [ "coverage" ] }
+    ],
+    "testPresets": [
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "output": { "outputOnFailure": true }
+        },
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "output": { "outputOnFailure": true }
+        },
+        {
+            "name": "sanitizers",
+            "configurePreset": "sanitizers",
+            "output": { "outputOnFailure": true }
+        }
+    ]
+}

@@ -5,21 +5,16 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of luminous intensity. The base SI unit of the family is the candela.
 namespace kmx::unit::luminous_intensity
 {
-    template <typename T = double>
-    struct candela: base<candela<T>, dimension::luminous_intensity, T>
-    {
-        using base<candela<T>, dimension::luminous_intensity, T>::base;
-
-        template <typename U>
-        using rebind = candela<U>;
-
-        static constexpr std::string_view text = "cd";
-    };
+    /// @brief The base SI unit of luminous intensity.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(candela, dimension::luminous_intensity_t, scale::one, "cd")
 }
 
-namespace kmx
+/// @brief The literal suffixes building luminous intensity values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_cd, unit::luminous_intensity::candela)
+    KMX_UNIT_LITERALS(cd, unit::luminous_intensity::candela)
 }

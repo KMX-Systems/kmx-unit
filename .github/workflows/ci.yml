@@ -1,0 +1,277 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qbs-primary:
+    name: qbs primary build and tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install qbs and the compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes qbs g++-14
+
+      - name: Resolve and build through qbs
+        run: |
+          profile="$(bash tools/qbs/select_profile.sh)"
+          echo "Using qbs profile: ${profile}"
+          qbs resolve -f kmx-unit.qbs --build-directory output/qbs profile:"${profile}" config:release
+          qbs build -f kmx-unit.qbs --build-directory output/qbs profile:"${profile}" config:release
+
+      - name: Run the complete QBS test suite
+        run: |
+          profile="$(bash tools/qbs/select_profile.sh)"
+          qbs run -f kmx-unit.qbs --build-directory output/qbs profile:"${profile}" config:release --products unit-test
+
+      - name: Run QBS benchmarks
+        run: |
+          profile="$(bash tools/qbs/select_profile.sh)"
+          qbs run -f kmx-unit.qbs --build-directory output/qbs profile:"${profile}" config:release --products unit-test -- "[benchmark]"
+
+      - name: Benchmark regression guard (formatter)
+        env:
+          CXX: g++-14
+          KMX_UNIT_FORMAT_BENCH_WARN_RATIO: "2.00"
+          KMX_UNIT_FORMAT_BENCH_FAIL_RATIO: "2.50"
+          KMX_UNIT_FORMAT_BENCH_RESULT_PATH: output/benchmark/formatting-guard.csv
+        run: bash tools/bench/guard_formatting.sh output/qbs
+
+      - name: Upload formatter benchmark guard artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatting-benchmark-guard
+          path: output/benchmark/formatting-guard.csv
+          if-no-files-found: warn
+
+  cmake-compatibility:
+    name: cmake compatibility / ${{ matrix.compiler.name }} / ${{ matrix.build_type }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - { name: gcc-14, cc: gcc-14, cxx: g++-14, packages: g++-14 }
+          - { name: clang-18, cc: clang-18, cxx: clang++-18, packages: clang-18 }
+        build_type: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ${{ matrix.compiler.packages }}
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.compiler.cc }}
+          CXX: ${{ matrix.compiler.cxx }}
+        run: >
+          cmake -S . -B output/cmake
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DKMX_UNIT_STRICT_WARNINGS=ON
+
+      - name: Build
+        run: cmake --build output/cmake --parallel
+
+      - name: Test
+        run: >
+          CXX=${{ matrix.compiler.cxx }}
+          bash tools/cmake/run_with_compiler_runtime.sh
+          ctest --test-dir output/cmake --output-on-failure
+
+  # The library writes into fixed buffers while formatting, and its arithmetic converts between value types
+  # of different widths. Neither is something a warning catches, so the suite runs once under the sanitizers.
+  cmake-sanitizers:
+    name: cmake compatibility / address and undefined behaviour sanitizers
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes g++-14
+
+      - name: Configure
+        env:
+          CC: gcc-14
+          CXX: g++-14
+        run: >
+          cmake -S . -B output/cmake
+          -DCMAKE_BUILD_TYPE=Debug
+          -DKMX_UNIT_STRICT_WARNINGS=ON
+          -DKMX_UNIT_SANITIZERS=ON
+
+      - name: Build
+        run: cmake --build output/cmake --parallel
+
+      - name: Test
+        run: >
+          CXX=g++-14 ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=print_stacktrace=1
+          bash tools/cmake/run_with_compiler_runtime.sh
+          ctest --test-dir output/cmake --output-on-failure
+
+  # The library is header-only, so its coverage is whatever the suite instantiates and runs. The job fails
+  # when the line coverage drops below the minimum the build declares.
+  cmake-coverage:
+    name: cmake compatibility / coverage
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the compiler and lcov
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes g++-14 lcov
+
+      # Through the presets, so that the configuration a developer runs locally is the one CI measures.
+      - name: Configure
+        env:
+          CC: gcc-14
+          CXX: g++-14
+        run: cmake --preset coverage
+
+      - name: Measure
+        run: cmake --build --preset coverage
+
+      - name: Upload the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: output/coverage/html
+          if-no-files-found: ignore
+
+  # The headers claim to compile on MSVC and on AppleClang; nothing exercised either until now.
+  cmake-portability:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: msvc / windows, os: windows-2022 }
+          - { name: appleclang / macos, os: macos-15 }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: >
+          cmake -S . -B output/cmake
+          -DCMAKE_BUILD_TYPE=Release
+          -DKMX_UNIT_STRICT_WARNINGS=ON
+
+      - name: Build
+        run: cmake --build output/cmake --config Release --parallel
+
+      - name: Test
+        run: cmake -E env --unset=LD_LIBRARY_PATH ctest --test-dir output/cmake --build-config Release --output-on-failure
+
+  cmake-install:
+    name: cmake compatibility / install and consume
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes g++-14
+
+      - name: Install the library
+        env:
+          CC: gcc-14
+          CXX: g++-14
+        run: |
+          cmake -S . -B output/cmake -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX="${GITHUB_WORKSPACE}/output/staging" \
+            -DKMX_UNIT_BUILD_TESTS=OFF -DKMX_UNIT_BUILD_EXAMPLE=OFF
+          cmake --install output/cmake
+
+      - name: Consume it through find_package
+        env:
+          CC: gcc-14
+          CXX: g++-14
+        run: |
+          mkdir --parents output/consumer
+          cat > output/consumer/CMakeLists.txt <<'PROJECT'
+          cmake_minimum_required(VERSION 3.23)
+          project(consumer LANGUAGES CXX)
+          find_package(kmx-unit REQUIRED)
+          message(STATUS "found kmx-unit ${kmx-unit_VERSION}")
+          add_executable(consumer main.cpp)
+          target_link_libraries(consumer PRIVATE kmx::unit)
+          PROJECT
+          cat > output/consumer/main.cpp <<'SOURCE'
+          #include <kmx/unit/all.hpp>
+          #include <iostream>
+
+          // The version the installed headers report has to be the one the package config announced.
+          static_assert(KMX_UNIT_VERSION >= KMX_UNIT_VERSION_NUMBER(1, 0, 0));
+
+          using namespace kmx::literals;
+
+          int main()
+          {
+              std::cout << kmx::unit::version_text << '\n';
+              std::cout << kmx::unit::convert<kmx::unit::distance::meter<>>(100.0_yd) << '\n';
+              return 0;
+          }
+          SOURCE
+          cmake -S output/consumer -B output/consumer/build \
+            -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/output/staging"
+          cmake --build output/consumer/build
+          CXX=g++-14 bash tools/cmake/run_with_compiler_runtime.sh ./output/consumer/build/consumer
+
+  format:
+    name: clang-format
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clang-format-18
+
+      - name: Check the formatting
+        run: >
+          clang-format-18 --dry-run -Werror
+          source/inc/kmx/unit/*.hpp
+          test/inc/kmx/unit/*.hpp
+          test/src/kmx/unit/*.cpp
+          example/src/kmx/unit/*.cpp
+
+  compile-time:
+    name: compile-time probes
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes g++-14
+
+      - name: Measure include cost
+        env:
+          CXX: g++-14
+        run: |
+          mkdir --parents output/compile_time
+          bash tools/compile_time/measure.sh 3 output/compile_time/report.csv | tee output/compile_time/report.txt
+
+      - name: Upload compile-time probe artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-time-probes
+          path: output/compile_time
+          if-no-files-found: error
+

@@ -27,8 +27,24 @@
 *.out
 *.app
 
+# Build and tooling output
+# Everything a build, a test run or a tooling script produces goes under `output/`. The remaining entries
+# catch the directories a build system falls back to when it is invoked without being told where to write:
+# qbs names its build directory after the configuration, CMake writes wherever `-B` points.
+/output/
+CMakeUserPresets.json
+# CMake writes these two before it reads CMakeLists.txt, so the in-source guard there cannot prevent them.
+/CMakeCache.txt
+/CMakeFiles/
+/build/
+/default/
+/debug/
+/release/
+/profiling/
+/staging/
+/consumer/
+
 # Other
 *.user
-build
 *.spv
 .vscode

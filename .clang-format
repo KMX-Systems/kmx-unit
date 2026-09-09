@@ -65,16 +65,16 @@ ForEachMacros:
 IncludeBlocks: Preserve
 IncludeCategories: 
   - 
+    Priority: 1
+    Regex: '^[<"]kmx/'
+    SortPriority: 0
+  - 
     Priority: 2
-    Regex: ^"(llvm|llvm-c|clang|clang-c)/
+    Regex: '^"'
     SortPriority: 0
   - 
     Priority: 3
-    Regex: ^(<|"(gtest|gmock|isl|json)/)
-    SortPriority: 0
-  - 
-    Priority: 1
-    Regex: .*
+    Regex: '^<'
     SortPriority: 0
 IncludeIsMainRegex: (Test)?$
 IncludeIsMainSourceRegex: ""

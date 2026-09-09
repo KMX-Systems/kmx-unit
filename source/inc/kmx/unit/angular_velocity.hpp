@@ -2,37 +2,29 @@
 /// @file inc/kmx/unit/angular_velocity.hpp
 #pragma once
 #ifndef PCH
+    #include <kmx/unit/angle.hpp>
     #include <kmx/unit/base.hpp>
-    #include <numbers>
 #endif
 
+/// @brief Units of angular velocity. The base SI unit of the family is the radian per second.
+/// @details An angle is dimensionless, so this family shares its dimension with a frequency; the two
+/// are told apart by the unit type, never by the dimension.
 namespace kmx::unit::angular_velocity
 {
-    template <typename T = double>
-    struct radian_per_second: base<radian_per_second<T>, dimension::angular_velocity, T>
-    {
-        using base<radian_per_second<T>, dimension::angular_velocity, T>::base;
+    /// @brief The base SI unit of angular velocity, one radian of rotation per second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(radian_per_second, dimension::angular_velocity_t, scale::one, std::ratio<0>, "rad/s",
+                       static constexpr bool angular_rate = true;)
 
-        template <typename U>
-        using rebind = radian_per_second<U>;
-
-        static constexpr std::string_view text = "rad/s";
-    };
-
-    template <typename T = double>
-    struct degree_per_second: base<degree_per_second<T>, dimension::angular_velocity, T, std::numbers::pi / 180.0>
-    {
-        using base<degree_per_second<T>, dimension::angular_velocity, T, std::numbers::pi / 180.0>::base;
-
-        template <typename U>
-        using rebind = degree_per_second<U>;
-
-        static constexpr std::string_view text = "deg/s";
-    };
+    /// @brief One degree of rotation per second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(degree_per_second, dimension::angular_velocity_t, angle::radian_per_degree, std::ratio<0>, "deg/s",
+                       static constexpr bool angular_rate = true;)
 }
 
-namespace kmx
+/// @brief The literal suffixes building angular velocity values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_rad_s, unit::angular_velocity::radian_per_second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_deg_s, unit::angular_velocity::degree_per_second)
+    KMX_UNIT_LITERALS(rad_s, unit::angular_velocity::radian_per_second)
+    KMX_UNIT_LITERALS(deg_s, unit::angular_velocity::degree_per_second)
 }

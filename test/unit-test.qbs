@@ -14,6 +14,14 @@ CppApplication {
         "src/kmx/unit/angle.cpp",
         "src/kmx/unit/angular_velocity.cpp",
         "src/kmx/unit/area.cpp",
+        "src/kmx/unit/torque.cpp",
+        "src/kmx/unit/solid_angle.cpp",
+        "src/kmx/unit/math.cpp",
+        "src/kmx/unit/frequency.cpp",
+        "src/kmx/unit/chrono.cpp",
+        "src/kmx/unit/amount.cpp",
+        "src/kmx/unit/benchmark.cpp",
+        "src/kmx/unit/ballistics.cpp",
         "src/kmx/unit/data_rate.cpp",
         "src/kmx/unit/derived.cpp",
         "src/kmx/unit/distance.cpp",
@@ -23,9 +31,12 @@ CppApplication {
         "src/kmx/unit/force.cpp",
         "src/kmx/unit/illuminance.cpp",
         "src/kmx/unit/information.cpp",
+        "src/kmx/unit/literals.cpp",
         "src/kmx/unit/luminous_intensity.cpp",
         "src/kmx/unit/mass.cpp",
         "src/kmx/unit/power.cpp",
+        "src/kmx/unit/properties.cpp",
+        "src/kmx/unit/scale.cpp",
         "src/kmx/unit/pressure.cpp",
         "src/kmx/unit/temperature.cpp",
         "src/kmx/unit/text.cpp",
@@ -34,6 +45,8 @@ CppApplication {
     ]
     cpp.cxxLanguageVersion: "c++23"
     cpp.enableRtti: false
+    cpp.warningLevel: "all"
+    cpp.treatWarningsAsErrors: true
     //cpp.cxxFlags: "-gdwarf-4"
     cpp.includePaths: [
         "inc",

@@ -3,11 +3,13 @@
 #include "kmx/unit/testing.hpp"
 #include <kmx/unit/illuminance.hpp>
 
+using namespace kmx::literals;
+
 namespace kmx::unit::illuminance
 {
     TEST_CASE("Illuminance Unit Tests", "[illuminance]")
     {
-        const auto val = _lx(500.0);
-        REQUIRE(val.value == 500.0);
+        const auto val = 500.0_lx;
+        REQUIRE(val.as_native() == 500.0);
     }
 }

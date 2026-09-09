@@ -5,103 +5,61 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of time. The base SI unit of the family is the second.
+/// @details Every unit of the family is a fixed span of time. None of them follows civil time, so a
+/// day is always 86400 seconds even across a leap second or a change of time zone.
 namespace kmx::unit::duration
 {
-    template <typename T = double>
-    struct second: base<second<T>, dimension::time, T>
-    {
-        using base<second<T>, dimension::time, T>::base;
+    /// @brief The base SI unit of time.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(second, dimension::time_t, scale::one, std::ratio<0>, "s", static constexpr std::uint32_t per_day = 86400u;
+                       static constexpr std::uint32_t per_hour = 3600u; static constexpr std::uint32_t per_minute = 60u;)
 
-        template <typename U>
-        using rebind = second<U>;
+    /// @brief One thousandth of a second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(millisecond, dimension::time_t, scale::milli, "ms")
 
-        static constexpr std::uint32_t per_day = 86400u;
-        static constexpr std::uint32_t per_hour = 3600u;
-        static constexpr std::uint32_t per_minute = 60u;
+    /// @brief One millionth of a second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(microsecond, dimension::time_t, scale::micro, "us")
 
-        static constexpr std::string_view text = "s";
-    };
+    /// @brief One thousand millionth of a second.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(nanosecond, dimension::time_t, scale::nano, "ns")
 
-    template <typename T = double>
-    struct millisecond: base<millisecond<T>, dimension::time, T, 1.0e-3>
-    {
-        using base<millisecond<T>, dimension::time, T, 1.0e-3>::base;
+    /// @brief Sixty seconds.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(minute, dimension::time_t, scale::ratio<60>, std::ratio<0>, "min", static constexpr std::uint32_t per_hour = 60u;)
 
-        template <typename U>
-        using rebind = millisecond<U>;
+    /// @brief Sixty minutes, that is 3600 seconds.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(hour, dimension::time_t, scale::ratio<3600>, std::ratio<0>, "h", static constexpr std::uint32_t per_day = 24u;)
 
-        static constexpr std::string_view text = "ms";
-    };
-
-    template <typename T = double>
-    struct microsecond: base<microsecond<T>, dimension::time, T, 1.0e-6>
-    {
-        using base<microsecond<T>, dimension::time, T, 1.0e-6>::base;
-
-        template <typename U>
-        using rebind = microsecond<U>;
-
-        static constexpr std::string_view text = "us";
-    };
-
-    template <typename T = double>
-    struct nanosecond: base<nanosecond<T>, dimension::time, T, 1.0e-9>
-    {
-        using base<nanosecond<T>, dimension::time, T, 1.0e-9>::base;
-
-        template <typename U>
-        using rebind = nanosecond<U>;
-
-        static constexpr std::string_view text = "ns";
-    };
-
-    template <typename T = double>
-    struct minute: base<minute<T>, dimension::time, T, 60.0>
-    {
-        using base<minute<T>, dimension::time, T, 60.0>::base;
-
-        template <typename U>
-        using rebind = minute<U>;
-
-        static constexpr std::uint32_t per_hour = 60u;
-
-        static constexpr std::string_view text = "min";
-    };
-
-    template <typename T = double>
-    struct hour: base<hour<T>, dimension::time, T, 3600.0>
-    {
-        using base<hour<T>, dimension::time, T, 3600.0>::base;
-
-        template <typename U>
-        using rebind = hour<U>;
-
-        static constexpr std::uint32_t per_day = 24u;
-
-        static constexpr std::string_view text = "h";
-    };
-
-    template <typename T = double>
-    struct day: base<day<T>, dimension::time, T, 86400.0>
-    {
-        using base<day<T>, dimension::time, T, 86400.0>::base;
-
-        template <typename U>
-        using rebind = day<U>;
-
-        static constexpr std::uint32_t per_week = 7u;
-
-        static constexpr std::string_view text = "d";
-    };
+    /// @brief Twenty-four hours, that is 86400 seconds.
+    /// @note This is a fixed span of time, not a calendar day: a calendar day is longer or shorter than
+    /// this one whenever a leap second or a change of civil time falls into it.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE_EX(day, dimension::time_t, scale::ratio<86400>, std::ratio<0>, "d", static constexpr std::uint32_t per_week = 7u;)
 }
 
-namespace kmx
+namespace kmx::unit
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_s, unit::duration::second)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ms, unit::duration::millisecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_us, unit::duration::microsecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ns, unit::duration::nanosecond)
-    KMX_UNIT_FACTORY_FUNCTIONS(_min, unit::duration::minute)
-    KMX_UNIT_FACTORY_FUNCTIONS(_h, unit::duration::hour)
-    KMX_UNIT_FACTORY_FUNCTIONS(_d, unit::duration::day)
+    /// @brief Satisfied by the units measuring a time.
+    /// @details It lives in this header rather than in kmx/unit/chrono.hpp so that a header needing only
+    /// the concept, such as kmx/unit/data_rate.hpp, does not have to include the whole of <chrono> for it.
+    /// @tparam U Candidate type.
+    template <typename U>
+    concept time_unit = unit_type<U> && std::is_same_v<typename U::dimension_t, dimension::time_t>;
+}
+
+/// @brief The literal suffixes building duration values, the terse form of this family.
+namespace kmx::literals
+{
+    KMX_UNIT_LITERALS(s, unit::duration::second)
+    KMX_UNIT_LITERALS(ms, unit::duration::millisecond)
+    KMX_UNIT_LITERALS(us, unit::duration::microsecond)
+    KMX_UNIT_LITERALS(ns, unit::duration::nanosecond)
+    KMX_UNIT_LITERALS(min, unit::duration::minute)
+    KMX_UNIT_LITERALS(h, unit::duration::hour)
+    KMX_UNIT_LITERALS(d, unit::duration::day)
 }

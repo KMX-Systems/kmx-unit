@@ -5,33 +5,21 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of volume. The base SI unit of the family is the cubic meter.
 namespace kmx::unit::volume
 {
-    template <typename T = double>
-    struct cubic_meter: base<cubic_meter<T>, dimension::volume, T>
-    {
-        using base<cubic_meter<T>, dimension::volume, T>::base;
+    /// @brief The base SI unit of volume.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(cubic_meter, dimension::volume_t, scale::one, "m3")
 
-        template <typename U>
-        using rebind = cubic_meter<U>;
-
-        static constexpr std::string_view text = "m3";
-    };
-
-    template <typename T = double>
-    struct liter: base<liter<T>, dimension::volume, T, 0.001>
-    {
-        using base<liter<T>, dimension::volume, T, 0.001>::base;
-
-        template <typename U>
-        using rebind = liter<U>;
-
-        static constexpr std::string_view text = "L";
-    };
+    /// @brief One thousandth of a cubic meter.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(liter, dimension::volume_t, scale::milli, "L")
 }
 
-namespace kmx
+/// @brief The literal suffixes building volume values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m3, unit::volume::cubic_meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_L, unit::volume::liter)
+    KMX_UNIT_LITERALS(m3, unit::volume::cubic_meter)
+    KMX_UNIT_LITERALS(L, unit::volume::liter)
 }

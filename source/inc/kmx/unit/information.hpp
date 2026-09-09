@@ -5,296 +5,142 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of information. The base unit of the family is the bit.
+/// @details The family carries both prefix conventions and keeps them apart by type: the decimal
+/// prefixes of the SI, where a kilobyte is a thousand bytes, and the binary prefixes of the IEC, where
+/// a kibibyte is 1024 bytes. The scale factors are built from integer constants, so no prefix loses
+/// precision to a rounded literal.
 namespace kmx::unit::information
 {
-    /// @brief A unique dimension tag for units of information.
-    struct dimension
-    {
-    };
+    /// @brief The dimension of the family, whose base unit is the bit.
+    /// @details It is an alias of kmx::unit::dimension::information_t rather than a tag of its own, so a
+    /// product or a quotient involving an information value goes through the ordinary dimension algebra:
+    /// dividing by a time yields a data rate, and multiplying a data rate by a time yields information back.
+    using dimension_t = ::kmx::unit::dimension::information_t;
 
-    // Integer-based scale factors for perfect precision
+    /// @brief The number of bits in one byte.
     constexpr std::uint64_t bits_in_byte = 8ull;
-    // Decimal (SI)
-    constexpr std::uint64_t kilo = 1000ull;
-    constexpr std::uint64_t mega = kilo * 1000ull;
-    constexpr std::uint64_t giga = mega * 1000ull;
-    constexpr std::uint64_t tera = giga * 1000ull;
-    constexpr std::uint64_t peta = tera * 1000ull;
-    // Binary (IEC)
-    constexpr std::uint64_t kibi = 1024ull;
-    constexpr std::uint64_t mebi = kibi * 1024ull;
-    constexpr std::uint64_t gibi = mebi * 1024ull;
-    constexpr std::uint64_t tebi = gibi * 1024ull;
-    constexpr std::uint64_t pebi = tebi * 1024ull;
-
-    // Base Units
-    template <typename T = double>
-    struct bit: base<bit<T>, dimension, T>
-    {
-        using base<bit<T>, dimension, T>::base;
-
-        template <typename U>
-        using rebind = bit<U>;
-
-        static constexpr std::string_view text = "b";
-    };
-
-    template <typename T = double>
-    struct byte: base<byte<T>, dimension, T, static_cast<double>(bits_in_byte)>
-    {
-        using base<byte<T>, dimension, T, static_cast<double>(bits_in_byte)>::base;
-
-        template <typename U>
-        using rebind = byte<U>;
-
-        static constexpr std::string_view text = "B";
-    };
-
-    // Decimal (SI) Prefixes
-    template <typename T = double>
-    struct kilobit: base<kilobit<T>, dimension, T, static_cast<double>(kilo)>
-    {
-        using base<kilobit<T>, dimension, T, static_cast<double>(kilo)>::base;
-
-        template <typename U>
-        using rebind = kilobit<U>;
 
-        static constexpr std::string_view text = "kb";
-    };
+    /// @brief The size of one byte in bits, the factor every byte-denominated unit is built from.
+    using bit_per_byte = scale::ratio<8>;
 
-    template <typename T = double>
-    struct kilobyte: base<kilobyte<T>, dimension, T, static_cast<double>(bits_in_byte* kilo)>
-    {
-        using base<kilobyte<T>, dimension, T, static_cast<double>(bits_in_byte* kilo)>::base;
-
-        template <typename U>
-        using rebind = kilobyte<U>;
-
-        static constexpr std::string_view text = "kB";
-    };
-
-    template <typename T = double>
-    struct megabit: base<megabit<T>, dimension, T, static_cast<double>(mega)>
-    {
-        using base<megabit<T>, dimension, T, static_cast<double>(mega)>::base;
-
-        template <typename U>
-        using rebind = megabit<U>;
-
-        static constexpr std::string_view text = "Mb";
-    };
-
-    template <typename T = double>
-    struct megabyte: base<megabyte<T>, dimension, T, static_cast<double>(bits_in_byte* mega)>
-    {
-        using base<megabyte<T>, dimension, T, static_cast<double>(bits_in_byte* mega)>::base;
-
-        template <typename U>
-        using rebind = megabyte<U>;
-
-        static constexpr std::string_view text = "MB";
-    };
+    /// @brief The size of a byte-denominated unit, given the prefix its count of bytes carries.
+    /// @tparam Prefix The prefix, a kmx::unit::scale magnitude.
+    template <typename Prefix>
+    using bytes_of = scale::multiply_t<bit_per_byte, Prefix>;
 
-    template <typename T = double>
-    struct gigabit: base<gigabit<T>, dimension, T, static_cast<double>(giga)>
-    {
-        using base<gigabit<T>, dimension, T, static_cast<double>(giga)>::base;
-
-        template <typename U>
-        using rebind = gigabit<U>;
+    /// @brief The base unit of information, a single binary digit.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(bit, dimension_t, scale::one, "b")
 
-        static constexpr std::string_view text = "Gb";
-    };
+    /// @brief Eight bits.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(byte, dimension_t, bit_per_byte, "B")
 
-    template <typename T = double>
-    struct gigabyte: base<gigabyte<T>, dimension, T, static_cast<double>(bits_in_byte* giga)>
-    {
-        using base<gigabyte<T>, dimension, T, static_cast<double>(bits_in_byte* giga)>::base;
+    /// @brief One thousand bits, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilobit, dimension_t, scale::kilo, "kb")
 
-        template <typename U>
-        using rebind = gigabyte<U>;
+    /// @brief One thousand bytes, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilobyte, dimension_t, bytes_of<scale::kilo>, "kB")
 
-        static constexpr std::string_view text = "GB";
-    };
+    /// @brief One million bits, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(megabit, dimension_t, scale::mega, "Mb")
 
-    template <typename T = double>
-    struct terabit: base<terabit<T>, dimension, T, static_cast<double>(tera)>
-    {
-        using base<terabit<T>, dimension, T, static_cast<double>(tera)>::base;
+    /// @brief One million bytes, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(megabyte, dimension_t, bytes_of<scale::mega>, "MB")
 
-        template <typename U>
-        using rebind = terabit<U>;
+    /// @brief One thousand million bits, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gigabit, dimension_t, scale::giga, "Gb")
 
-        static constexpr std::string_view text = "Tb";
-    };
+    /// @brief One thousand million bytes, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gigabyte, dimension_t, bytes_of<scale::giga>, "GB")
 
-    template <typename T = double>
-    struct terabyte: base<terabyte<T>, dimension, T, static_cast<double>(bits_in_byte* tera)>
-    {
-        using base<terabyte<T>, dimension, T, static_cast<double>(bits_in_byte* tera)>::base;
+    /// @brief One million million bits, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(terabit, dimension_t, scale::tera, "Tb")
 
-        template <typename U>
-        using rebind = terabyte<U>;
+    /// @brief One million million bytes, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(terabyte, dimension_t, bytes_of<scale::tera>, "TB")
 
-        static constexpr std::string_view text = "TB";
-    };
+    /// @brief One thousand million million bits, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(petabit, dimension_t, scale::peta, "Pb")
 
-    template <typename T = double>
-    struct petabit: base<petabit<T>, dimension, T, static_cast<double>(peta)>
-    {
-        using base<petabit<T>, dimension, T, static_cast<double>(peta)>::base;
+    /// @brief One thousand million million bytes, the decimal prefix of the SI.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(petabyte, dimension_t, bytes_of<scale::peta>, "PB")
 
-        template <typename U>
-        using rebind = petabit<U>;
+    /// @brief 1024 bits, the binary prefix of the IEC.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kibibit, dimension_t, scale::kibi, "Kib")
 
-        static constexpr std::string_view text = "Pb";
-    };
+    /// @brief 1024 bytes, the binary prefix of the IEC.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kibibyte, dimension_t, bytes_of<scale::kibi>, "KiB")
 
-    template <typename T = double>
-    struct petabyte: base<petabyte<T>, dimension, T, static_cast<double>(bits_in_byte* peta)>
-    {
-        using base<petabyte<T>, dimension, T, static_cast<double>(bits_in_byte* peta)>::base;
+    /// @brief 1024 kibibits, that is 1048576 bits.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(mebibit, dimension_t, scale::mebi, "Mib")
 
-        template <typename U>
-        using rebind = petabyte<U>;
+    /// @brief 1024 kibibytes, that is 1048576 bytes.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(mebibyte, dimension_t, bytes_of<scale::mebi>, "MiB")
 
-        static constexpr std::string_view text = "PB";
-    };
+    /// @brief 1024 mebibits.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gibibit, dimension_t, scale::gibi, "Gib")
 
-    // Binary (IEC) Prefixes
-    template <typename T = double>
-    struct kibibit: base<kibibit<T>, dimension, T, static_cast<double>(kibi)>
-    {
-        using base<kibibit<T>, dimension, T, static_cast<double>(kibi)>::base;
+    /// @brief 1024 mebibytes.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(gibibyte, dimension_t, bytes_of<scale::gibi>, "GiB")
 
-        template <typename U>
-        using rebind = kibibit<U>;
+    /// @brief 1024 gibibits.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(tebibit, dimension_t, scale::tebi, "Tib")
 
-        static constexpr std::string_view text = "Kib";
-    };
+    /// @brief 1024 gibibytes.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(tebibyte, dimension_t, bytes_of<scale::tebi>, "TiB")
 
-    template <typename T = double>
-    struct kibibyte: base<kibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* kibi)>
-    {
-        using base<kibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* kibi)>::base;
+    /// @brief 1024 tebibits.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(pebibit, dimension_t, scale::pebi, "Pib")
 
-        template <typename U>
-        using rebind = kibibyte<U>;
-
-        static constexpr std::string_view text = "KiB";
-    };
-
-    template <typename T = double>
-    struct mebibit: base<mebibit<T>, dimension, T, static_cast<double>(mebi)>
-    {
-        using base<mebibit<T>, dimension, T, static_cast<double>(mebi)>::base;
-
-        template <typename U>
-        using rebind = mebibit<U>;
-
-        static constexpr std::string_view text = "Mib";
-    };
-
-    template <typename T = double>
-    struct mebibyte: base<mebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* mebi)>
-    {
-        using base<mebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* mebi)>::base;
-
-        template <typename U>
-        using rebind = mebibyte<U>;
-
-        static constexpr std::string_view text = "MiB";
-    };
-
-    template <typename T = double>
-    struct gibibit: base<gibibit<T>, dimension, T, static_cast<double>(gibi)>
-    {
-        using base<gibibit<T>, dimension, T, static_cast<double>(gibi)>::base;
-
-        template <typename U>
-        using rebind = gibibit<U>;
-
-        static constexpr std::string_view text = "Gib";
-    };
-
-    template <typename T = double>
-    struct gibibyte: base<gibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* gibi)>
-    {
-        using base<gibibyte<T>, dimension, T, static_cast<double>(bits_in_byte* gibi)>::base;
-
-        template <typename U>
-        using rebind = gibibyte<U>;
-
-        static constexpr std::string_view text = "GiB";
-    };
-
-    template <typename T = double>
-    struct tebibit: base<tebibit<T>, dimension, T, static_cast<double>(tebi)>
-    {
-        using base<tebibit<T>, dimension, T, static_cast<double>(tebi)>::base;
-
-        template <typename U>
-        using rebind = tebibit<U>;
-
-        static constexpr std::string_view text = "Tib";
-    };
-
-    template <typename T = double>
-    struct tebibyte: base<tebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* tebi)>
-    {
-        using base<tebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* tebi)>::base;
-
-        template <typename U>
-        using rebind = tebibyte<U>;
-
-        static constexpr std::string_view text = "TiB";
-    };
-
-    template <typename T = double>
-    struct pebibit: base<pebibit<T>, dimension, T, static_cast<double>(pebi)>
-    {
-        using base<pebibit<T>, dimension, T, static_cast<double>(pebi)>::base;
-
-        template <typename U>
-        using rebind = pebibit<U>;
-
-        static constexpr std::string_view text = "Pib";
-    };
-
-    template <typename T = double>
-    struct pebibyte: base<pebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* pebi)>
-    {
-        using base<pebibyte<T>, dimension, T, static_cast<double>(bits_in_byte* pebi)>::base;
-
-        template <typename U>
-        using rebind = pebibyte<U>;
-
-        static constexpr std::string_view text = "PiB";
-    };
+    /// @brief 1024 tebibytes.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(pebibyte, dimension_t, bytes_of<scale::pebi>, "PiB")
 }
 
-namespace kmx
+/// @brief The literal suffixes building information values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_b, unit::information::bit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_B, unit::information::byte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kb, unit::information::kilobit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kB, unit::information::kilobyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Mb, unit::information::megabit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MB, unit::information::megabyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Gb, unit::information::gigabit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_GB, unit::information::gigabyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Tb, unit::information::terabit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_TB, unit::information::terabyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Pb, unit::information::petabit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_PB, unit::information::petabyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Kib, unit::information::kibibit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_KiB, unit::information::kibibyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Mib, unit::information::mebibit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_MiB, unit::information::mebibyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Gib, unit::information::gibibit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_GiB, unit::information::gibibyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Tib, unit::information::tebibit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_TiB, unit::information::tebibyte)
-    KMX_UNIT_FACTORY_FUNCTIONS(_Pib, unit::information::pebibit)
-    KMX_UNIT_FACTORY_FUNCTIONS(_PiB, unit::information::pebibyte)
+    KMX_UNIT_LITERALS(b, unit::information::bit)
+    KMX_UNIT_LITERALS(B, unit::information::byte)
+    KMX_UNIT_LITERALS(kb, unit::information::kilobit)
+    KMX_UNIT_LITERALS(kB, unit::information::kilobyte)
+    KMX_UNIT_LITERALS(Mb, unit::information::megabit)
+    KMX_UNIT_LITERALS(MB, unit::information::megabyte)
+    KMX_UNIT_LITERALS(Gb, unit::information::gigabit)
+    KMX_UNIT_LITERALS(GB, unit::information::gigabyte)
+    KMX_UNIT_LITERALS(Tb, unit::information::terabit)
+    KMX_UNIT_LITERALS(TB, unit::information::terabyte)
+    KMX_UNIT_LITERALS(Pb, unit::information::petabit)
+    KMX_UNIT_LITERALS(PB, unit::information::petabyte)
+    KMX_UNIT_LITERALS(Kib, unit::information::kibibit)
+    KMX_UNIT_LITERALS(KiB, unit::information::kibibyte)
+    KMX_UNIT_LITERALS(Mib, unit::information::mebibit)
+    KMX_UNIT_LITERALS(MiB, unit::information::mebibyte)
+    KMX_UNIT_LITERALS(Gib, unit::information::gibibit)
+    KMX_UNIT_LITERALS(GiB, unit::information::gibibyte)
+    KMX_UNIT_LITERALS(Tib, unit::information::tebibit)
+    KMX_UNIT_LITERALS(TiB, unit::information::tebibyte)
+    KMX_UNIT_LITERALS(Pib, unit::information::pebibit)
+    KMX_UNIT_LITERALS(PiB, unit::information::pebibyte)
 }

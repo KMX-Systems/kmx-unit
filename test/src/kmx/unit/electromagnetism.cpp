@@ -3,6 +3,8 @@
 #include "kmx/unit/testing.hpp"
 #include <kmx/unit/electromagnetism.hpp>
 
+using namespace kmx::literals;
+
 namespace kmx::unit::electromagnetism
 {
     TEST_CASE("Current Unit Tests", "[current]")
@@ -11,9 +13,9 @@ namespace kmx::unit::electromagnetism
 
         SECTION("Float Conversions (convert)")
         {
-            REQUIRE_THAT(convert<milliampere<>>(_A(1.5)).as_native(), approx(1500.0));
-            REQUIRE_THAT(convert<kiloampere<>>(_mA(2500.0)).as_native(), approx(0.0025));
-            REQUIRE_THAT(convert<ampere<>>(_kA(0.5)).as_native(), approx(500.0));
+            REQUIRE_THAT(convert<milliampere<>>(1.5_A).as_native(), approx(1500.0));
+            REQUIRE_THAT(convert<kiloampere<>>(2500.0_mA).as_native(), approx(0.0025));
+            REQUIRE_THAT(convert<ampere<>>(0.5_kA).as_native(), approx(500.0));
         }
     }
 
@@ -23,8 +25,8 @@ namespace kmx::unit::electromagnetism
 
         SECTION("Float Conversions (convert)")
         {
-            REQUIRE_THAT(convert<millivolt<>>(_V(12.0)).as_native(), approx(12000.0));
-            REQUIRE_THAT(convert<volt<>>(_kV(0.4)).as_native(), approx(400.0));
+            REQUIRE_THAT(convert<millivolt<>>(12.0_V).as_native(), approx(12000.0));
+            REQUIRE_THAT(convert<volt<>>(0.4_kV).as_native(), approx(400.0));
         }
     }
 
@@ -34,8 +36,8 @@ namespace kmx::unit::electromagnetism
 
         SECTION("Float Conversions (convert)")
         {
-            REQUIRE_THAT(convert<kiloohm<>>(_Ohm(2200.0)).as_native(), approx(2.2));
-            REQUIRE_THAT(convert<ohm<>>(_kOhm(3.3)).as_native(), approx(3300.0));
+            REQUIRE_THAT(convert<kiloohm<>>(2200.0_Ohm).as_native(), approx(2.2));
+            REQUIRE_THAT(convert<ohm<>>(3.3_kOhm).as_native(), approx(3300.0));
         }
     }
 }

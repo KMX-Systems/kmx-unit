@@ -5,21 +5,16 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of illuminance. The base SI unit of the family is the lux.
 namespace kmx::unit::illuminance
 {
-    template <typename T = double>
-    struct lux: base<lux<T>, dimension::illuminance, T>
-    {
-        using base<lux<T>, dimension::illuminance, T>::base;
-
-        template <typename U>
-        using rebind = lux<U>;
-
-        static constexpr std::string_view text = "lx";
-    };
+    /// @brief The base SI unit of illuminance, one lumen per square meter.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(lux, dimension::illuminance_t, scale::one, "lx")
 }
 
-namespace kmx
+/// @brief The literal suffixes building illuminance values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_lx, unit::illuminance::lux)
+    KMX_UNIT_LITERALS(lx, unit::illuminance::lux)
 }

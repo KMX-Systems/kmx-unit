@@ -2,48 +2,33 @@
 /// @file inc/kmx/unit/force.hpp
 #pragma once
 #ifndef PCH
+    #include <kmx/unit/acceleration.hpp>
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of force. The base SI unit of the family is the newton.
+/// @details A weight belongs here, a mass does not: kmx::unit::mass::pound measures a mass, while the
+/// force that mass exerts under standard gravity is a value of this family.
 namespace kmx::unit::force
 {
-    template <typename T = double>
-    struct newton: base<newton<T>, dimension::force, T>
-    {
-        using base<newton<T>, dimension::force, T>::base;
+    /// @brief The base SI unit of force, the force accelerating one kilogram by one meter per second squared.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(newton, dimension::force_t, scale::one, "N")
 
-        template <typename U>
-        using rebind = newton<U>;
+    /// @brief One thousand newtons.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilonewton, dimension::force_t, scale::kilo, "kN")
 
-        static constexpr std::string_view text = "N";
-    };
-
-    template <typename T = double>
-    struct kilonewton: base<kilonewton<T>, dimension::force, T, 1000.0>
-    {
-        using base<kilonewton<T>, dimension::force, T, 1000.0>::base;
-
-        template <typename U>
-        using rebind = kilonewton<U>;
-
-        static constexpr std::string_view text = "kN";
-    };
-
-    template <typename T = double>
-    struct kilogram_force: base<kilogram_force<T>, dimension::force, T, 9.80665>
-    {
-        using base<kilogram_force<T>, dimension::force, T, 9.80665>::base;
-
-        template <typename U>
-        using rebind = kilogram_force<U>;
-
-        static constexpr std::string_view text = "kgf";
-    };
+    /// @brief The force one kilogram of mass exerts under standard gravity.
+    /// @note This is a force, not a mass. A mass quoted in kilograms belongs to kmx::unit::mass.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilogram_force, dimension::force_t, acceleration::standard_gravity_magnitude, "kgf")
 }
 
-namespace kmx
+/// @brief The literal suffixes building force values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_N, unit::force::newton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kN, unit::force::kilonewton)
-    KMX_UNIT_FACTORY_FUNCTIONS(_kgf, unit::force::kilogram_force)
+    KMX_UNIT_LITERALS(N, unit::force::newton)
+    KMX_UNIT_LITERALS(kN, unit::force::kilonewton)
+    KMX_UNIT_LITERALS(kgf, unit::force::kilogram_force)
 }

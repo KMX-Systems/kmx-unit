@@ -12,6 +12,11 @@ StaticLibrary {
         "inc/kmx/unit/angular_velocity.hpp",
         "inc/kmx/unit/area.hpp",
         "inc/kmx/unit/base.hpp",
+        "inc/kmx/unit/chrono.hpp",
+        "inc/kmx/unit/torque.hpp",
+        "inc/kmx/unit/solid_angle.hpp",
+        "inc/kmx/unit/frequency.hpp",
+        "inc/kmx/unit/amount.hpp",
         "inc/kmx/unit/data_rate.hpp",
         "inc/kmx/unit/distance.hpp",
         "inc/kmx/unit/duration.hpp",
@@ -22,11 +27,13 @@ StaticLibrary {
         "inc/kmx/unit/information.hpp",
         "inc/kmx/unit/luminous_intensity.hpp",
         "inc/kmx/unit/mass.hpp",
+        "inc/kmx/unit/math.hpp",
         "inc/kmx/unit/power.hpp",
         "inc/kmx/unit/pressure.hpp",
         "inc/kmx/unit/temperature.hpp",
         "inc/kmx/unit/text.hpp",
         "inc/kmx/unit/velocity.hpp",
+        "inc/kmx/unit/version.hpp",
         "inc/kmx/unit/volume.hpp",
     ]
     cpp.cxxLanguageVersion: "c++23"
@@ -38,4 +45,15 @@ StaticLibrary {
         "inc_dep",
     ]
     //cpp.staticLibraries: ["pthread"]
+
+    Export {
+        Depends {
+            name: "cpp"
+        }
+        cpp.cxxLanguageVersion: "c++23"
+        cpp.includePaths: [
+            "api",
+            "inc",
+        ]
+    }
 }

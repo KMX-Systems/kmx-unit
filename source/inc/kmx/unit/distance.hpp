@@ -5,81 +5,68 @@
     #include <kmx/unit/base.hpp>
 #endif
 
+/// @brief Units of length. The base SI unit of the family is the meter.
+/// @note The imperial units are the international definitions of 1959, which are exact by definition:
+/// one inch is exactly 25.4 mm and every other imperial length follows from it.
 namespace kmx::unit::distance
 {
-    template <typename T = double>
-    struct meter: base<meter<T>, dimension::length, T>
-    {
-        using base<meter<T>, dimension::length, T>::base;
+    /// @brief The size of one inch in meters, exactly 0.0254 by definition.
+    using meter_per_inch = scale::ratio<127, 5000>;
 
-        template <typename U>
-        using rebind = meter<U>;
+    /// @brief The size of one foot in meters, exactly twelve inches.
+    using meter_per_foot = scale::multiply_t<meter_per_inch, scale::ratio<12>>;
 
-        static constexpr std::string_view text = "m";
-    };
+    /// @brief The size of one yard in meters, exactly three feet.
+    using meter_per_yard = scale::multiply_t<meter_per_foot, scale::ratio<3>>;
 
-    template <typename T = double>
-    struct kilometer: base<kilometer<T>, dimension::length, T, 1000.0>
-    {
-        using base<kilometer<T>, dimension::length, T, 1000.0>::base;
+    /// @brief The size of one mile in meters, exactly 1760 yards.
+    using meter_per_mile = scale::multiply_t<meter_per_yard, scale::ratio<1760>>;
 
-        template <typename U>
-        using rebind = kilometer<U>;
+    /// @brief The size of one nautical mile in meters, exactly 1852 by definition.
+    using meter_per_nautical_mile = scale::ratio<1852>;
 
-        static constexpr std::string_view text = "km";
-    };
+    /// @brief One thousandth of a meter, used for bore diameters and short offsets.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(millimeter, dimension::length_t, scale::milli, "mm")
 
-    template <typename T = double>
-    struct foot: base<foot<T>, dimension::length, T, 0.3048>
-    {
-        using base<foot<T>, dimension::length, T, 0.3048>::base;
+    /// @brief The base SI unit of length.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(meter, dimension::length_t, scale::one, "m")
 
-        template <typename U>
-        using rebind = foot<U>;
+    /// @brief One thousand meters.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(kilometer, dimension::length_t, scale::kilo, "km")
 
-        static constexpr std::string_view text = "ft";
-    };
+    /// @brief The international inch, exactly 25.4 mm.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(inch, dimension::length_t, meter_per_inch, "in")
 
-    template <typename T = double>
-    struct yard: base<yard<T>, dimension::length, T, 0.9144>
-    {
-        using base<yard<T>, dimension::length, T, 0.9144>::base;
+    /// @brief The international foot, exactly 12 inches.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(foot, dimension::length_t, meter_per_foot, "ft")
 
-        template <typename U>
-        using rebind = yard<U>;
+    /// @brief The international yard, exactly 3 feet.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(yard, dimension::length_t, meter_per_yard, "yd")
 
-        static constexpr std::string_view text = "yd";
-    };
+    /// @brief The international statute mile, exactly 1760 yards.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(mile, dimension::length_t, meter_per_mile, "mi")
 
-    template <typename T = double>
-    struct mile: base<mile<T>, dimension::length, T, 1609.344>
-    {
-        using base<mile<T>, dimension::length, T, 1609.344>::base;
-
-        template <typename U>
-        using rebind = mile<U>;
-
-        static constexpr std::string_view text = "mi";
-    };
-
-    template <typename T = double>
-    struct nautical_mile: base<nautical_mile<T>, dimension::length, T, 1852.0>
-    {
-        using base<nautical_mile<T>, dimension::length, T, 1852.0>::base;
-
-        template <typename U>
-        using rebind = nautical_mile<U>;
-
-        static constexpr std::string_view text = "nmi";
-    };
+    /// @brief The international nautical mile, exactly 1852 m.
+    /// @tparam T The arithmetic type holding the value.
+    KMX_UNIT_DEFINE(nautical_mile, dimension::length_t, meter_per_nautical_mile, "nmi")
 }
 
-namespace kmx
+/// @brief The literal suffixes building distance values, the terse form of this family.
+namespace kmx::literals
 {
-    KMX_UNIT_FACTORY_FUNCTIONS(_m, unit::distance::meter)
-    KMX_UNIT_FACTORY_FUNCTIONS(_km, unit::distance::kilometer)
-    KMX_UNIT_FACTORY_FUNCTIONS(_ft, unit::distance::foot)
-    KMX_UNIT_FACTORY_FUNCTIONS(_yd, unit::distance::yard)
-    KMX_UNIT_FACTORY_FUNCTIONS(_mi, unit::distance::mile)
-    KMX_UNIT_FACTORY_FUNCTIONS(_nmi, unit::distance::nautical_mile)
+    KMX_UNIT_LITERALS(mm, unit::distance::millimeter)
+    KMX_UNIT_LITERALS(m, unit::distance::meter)
+    KMX_UNIT_LITERALS(km, unit::distance::kilometer)
+    KMX_UNIT_LITERALS(in, unit::distance::inch)
+    KMX_UNIT_LITERALS(ft, unit::distance::foot)
+    KMX_UNIT_LITERALS(yd, unit::distance::yard)
+    KMX_UNIT_LITERALS(mi, unit::distance::mile)
+    KMX_UNIT_LITERALS(nmi, unit::distance::nautical_mile)
 }

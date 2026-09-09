@@ -5,13 +5,15 @@
 #include <kmx/unit/text.hpp>
 #include <sstream>
 
+using namespace kmx::literals;
+
 namespace kmx::unit::power
 {
     TEST_CASE("Power Unit Tests", "[power]")
     {
         SECTION("Float Conversions (convert)")
         {
-            auto val = _kW(3.5);
+            auto val = 3.5_kW;
             REQUIRE_THAT(convert<watt<>>(val).as_native(), approx(3500.0));
         }
 
@@ -23,22 +25,22 @@ namespace kmx::unit::power
 
         SECTION("Large Scale Conversions")
         {
-            REQUIRE(_MW(1.0) == _kW(1000.0));
-            REQUIRE(_GW(1.0) == _MW(1000.0));
-            REQUIRE(_TW(1.0) == _GW(1000.0));
-            REQUIRE(_PW(1.0) == _TW(1000.0));
+            REQUIRE(1.0_MW == 1000.0_kW);
+            REQUIRE(1.0_GW == 1000.0_MW);
+            REQUIRE(1.0_TW == 1000.0_GW);
+            REQUIRE(1.0_PW == 1000.0_TW);
 
-            REQUIRE(_GW(2.5) == _W(2.5e9));
-            REQUIRE(_PW(0.5) == _MW(500000000.0));
+            REQUIRE(2.5_GW == 2.5e9_W);
+            REQUIRE(0.5_PW == 500000000.0_MW);
 
-            auto val = _TW(1.2);
+            auto val = 1.2_TW;
             REQUIRE_THAT(convert<megawatt<>>(val).as_native(), approx(1200000.0));
         }
 
         SECTION("Streaming")
         {
             std::stringstream ss;
-            ss << _GW(1.21);
+            ss << 1.21_GW;
             REQUIRE(ss.str() == "1.21 GW");
         }
     }
